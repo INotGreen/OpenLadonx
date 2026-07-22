@@ -15,7 +15,6 @@ usage() {
   echo "Updates:"
   echo "  - icon.png"
   echo "  - public/app-icon.png"
-  echo "  - docs/assets/app-icon.png"
   echo "  - src-tauri/icons/* via tauri icon"
   echo "  - src-tauri/icons/tray-icon.png"
 }
@@ -95,9 +94,9 @@ fi
 echo "Generating Tauri icon set..."
 npm run tauri -- icon icon.png
 
-echo "Syncing frontend and docs icons..."
+echo "Syncing frontend icon..."
+mkdir -p public
 cp icon.png public/app-icon.png
-cp icon.png docs/assets/app-icon.png
 
 echo "Generating tray icon..."
 sips -z 64 64 icon.png --out src-tauri/icons/tray-icon.png >/dev/null

@@ -7,11 +7,11 @@ then uploads all artifacts to Cloudflare R2 in parallel.
 No zip archives are produced — only .dmg and .msi installers.
 
 Usage:
-    python3 scripts/parallel_release.py                          # build all + upload
-    python3 scripts/parallel_release.py --build-only             # build only
-    python3 scripts/parallel_release.py --upload-only            # upload latest
-    python3 scripts/parallel_release.py --targets mac-arm64      # specific targets
-    python3 scripts/parallel_release.py --workers 2              # limit parallelism
+    python3 tools/parallel_release.py                          # build all + upload
+    python3 tools/parallel_release.py --build-only             # build only
+    python3 tools/parallel_release.py --upload-only            # upload latest
+    python3 tools/parallel_release.py --targets mac-arm64      # specific targets
+    python3 tools/parallel_release.py --workers 2              # limit parallelism
 """
 from __future__ import annotations
 
