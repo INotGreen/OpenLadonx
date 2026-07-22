@@ -1,5 +1,7 @@
 # OpenLadonx
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 OpenLadonx is the desktop client for LadonX, built with React, Vite, TypeScript, and Tauri 2. The app combines a modern React workspace with a Rust native layer for desktop integration, local services, packaging, and system-level workflows.
 
 ## Features
