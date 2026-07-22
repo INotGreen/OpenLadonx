@@ -1,0 +1,307 @@
+.automation-view {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  padding: calc(20px + var(--home-scroll-offset, 0px)) clamp(18px, 4vw, 56px) 26px;
+  color: var(--text-strong);
+  background: color-mix(in srgb, var(--surface-bg) 94%, black);
+}
+
+.automation-header,
+.automation-content {
+  width: min(100%, 820px);
+  margin-inline: auto;
+}
+
+.automation-header {
+  flex: 0 0 auto;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 16px;
+  padding-top: 24px;
+  margin-bottom: 18px;
+}
+
+.automation-content {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 0;
+  flex-direction: column;
+}
+
+.automation-title {
+  grid-column: 1;
+  margin: 0;
+  color: var(--text-stronger);
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 0;
+}
+
+.automation-subtitle {
+  grid-column: 1;
+  margin: 0;
+  color: color-mix(in srgb, var(--text-muted) 88%, transparent);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.automation-subtitle button {
+  margin-left: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #5aa7ff;
+  font: inherit;
+}
+
+.automation-header-actions {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.automation-template-button,
+.automation-create-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 0 11px;
+  border: 1px solid color-mix(in srgb, var(--border-muted) 82%, transparent);
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 650;
+  white-space: nowrap;
+}
+
+.automation-template-button {
+  background: color-mix(in srgb, var(--surface-panel) 52%, transparent);
+  color: var(--text-stronger);
+}
+
+.automation-create-button {
+  border-color: transparent;
+  background: color-mix(in srgb, var(--text-stronger) 97%, transparent);
+  color: #111;
+  font-size: 12px;
+}
+
+.automation-create-chevron {
+  color: color-mix(in srgb, #111 72%, transparent);
+  font-size: 13px;
+  line-height: 1;
+}
+
+.automation-section-title {
+  margin: 0;
+  padding: 0 0 12px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-muted) 70%, transparent);
+  color: var(--text-stronger);
+  font-size: 17px;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.automation-empty-state {
+  display: flex;
+  flex: 1 1 auto;
+  min-height: 280px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+  padding-bottom: 4vh;
+  color: var(--text-stronger);
+  text-align: center;
+}
+
+.automation-empty-state > svg {
+  color: var(--text-stronger);
+}
+
+.automation-empty-state h2 {
+  margin: 0;
+  color: var(--text-stronger);
+  font-size: 17px;
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.automation-template-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.automation-template-list button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-width: 118px;
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid color-mix(in srgb, var(--border-muted) 74%, var(--text-stronger) 12%);
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--surface-panel) 34%, transparent);
+  color: color-mix(in srgb, var(--text-stronger) 88%, transparent);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.automation-template-list button > svg {
+  color: color-mix(in srgb, var(--text-stronger) 82%, transparent);
+}
+
+.automation-template-list button:hover,
+.automation-template-list button:focus-visible {
+  border-color: color-mix(in srgb, var(--border-muted) 58%, var(--text-stronger) 24%);
+  background: color-mix(in srgb, var(--surface-panel) 46%, transparent);
+  color: var(--text-stronger);
+}
+
+.automation-rule-list {
+  margin-top: 9px;
+}
+
+.automation-rule-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  min-height: 56px;
+  padding: 0 17px;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--surface-panel) 70%, transparent);
+}
+
+.automation-rule-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.automation-rule-main > svg {
+  flex: 0 0 auto;
+  color: color-mix(in srgb, var(--text-muted) 82%, transparent);
+}
+
+.automation-rule-copy {
+  display: flex;
+  align-items: baseline;
+  gap: 11px;
+  min-width: 0;
+}
+
+.automation-rule-title {
+  overflow: hidden;
+  color: var(--text-stronger);
+  font-size: 16px;
+  font-weight: 650;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.automation-rule-owner {
+  flex: 0 0 auto;
+  color: color-mix(in srgb, var(--text-muted) 76%, transparent);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.automation-rule-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  flex: 0 0 auto;
+}
+
+.automation-rule-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 26px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: color-mix(in srgb, var(--text-muted) 86%, transparent);
+}
+
+.automation-rule-actions button:hover,
+.automation-rule-actions button:focus-visible {
+  color: var(--text-stronger);
+}
+
+@media (max-width: 720px) {
+  .automation-view {
+    padding-inline: 14px;
+  }
+
+  .automation-header {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-top: 22px;
+  }
+
+  .automation-header-actions {
+    flex-wrap: wrap;
+  }
+
+  .automation-create-button,
+  .automation-template-button {
+    align-self: flex-start;
+  }
+
+  .automation-empty-state {
+    min-height: 240px;
+    padding-bottom: 0;
+  }
+
+  .automation-empty-state > svg {
+    width: 72px;
+    height: 72px;
+  }
+
+  .automation-template-list {
+    align-items: stretch;
+    flex-direction: column;
+    width: min(100%, 220px);
+  }
+
+  .automation-template-list button {
+    width: 100%;
+  }
+
+  .automation-rule-row {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 12px;
+  }
+
+  .automation-rule-copy {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .automation-rule-title {
+    white-space: normal;
+  }
+}

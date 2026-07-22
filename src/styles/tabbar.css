@@ -1,0 +1,144 @@
+.tabbar {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 6px;
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border-subtle);
+  background: var(--surface-topbar);
+  backdrop-filter: blur(24px) saturate(1.2);
+  -webkit-app-region: no-drag;
+  min-height: var(--tabbar-height, 56px);
+  flex-shrink: 0;
+  transition:
+    max-height 140ms ease,
+    min-height 140ms ease,
+    padding 140ms ease,
+    border-top-width 140ms ease,
+    opacity 140ms ease;
+}
+
+.app.reduced-transparency .tabbar {
+  backdrop-filter: none;
+}
+
+.tabbar-item {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-subtle);
+  padding: 8px 6px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.tabbar-item:hover {
+  color: var(--text-stronger);
+  background: var(--surface-hover);
+}
+
+.tabbar-item.active {
+  color: var(--text-strong);
+  background: var(--surface-control-hover);
+  border-color: var(--border-accent-soft);
+  box-shadow: 0 0 0 1px rgba(100, 200, 255, 0.2);
+}
+
+.tabbar-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tabbar-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.app.layout-phone .phone-shell-nav {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 8;
+  width: var(--phone-nav-width, 76px);
+  padding-top: env(safe-area-inset-top);
+  background: var(--surface-topbar);
+  border-right: 1px solid var(--border-subtle);
+  backdrop-filter: blur(24px) saturate(1.2);
+  transition: width 160ms ease, opacity 160ms ease;
+}
+
+.app.layout-phone.reduced-transparency .phone-shell-nav {
+  backdrop-filter: none;
+}
+
+.app.layout-phone .phone-shell-nav.is-collapsed {
+  width: 0;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.app.layout-phone .phone-shell-nav .tabbar {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: none;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: calc(56px + env(safe-area-inset-top)) 8px calc(18px + env(safe-area-inset-bottom));
+  border-top: none;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+.app.layout-phone .phone-shell-nav .tabbar-item {
+  width: 100%;
+  min-height: 58px;
+  padding: 8px 4px;
+  border-radius: 8px;
+  flex: 0 0 auto;
+}
+
+.app.layout-phone .phone-shell-nav .tabbar-label {
+  max-width: 100%;
+  font-size: 11px;
+  line-height: 1.1;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.app.layout-phone .phone-shell-nav .tabbar-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.app.layout-phone .phone-shell-toggle {
+  position: absolute;
+  top: calc(8px + env(safe-area-inset-top));
+  left: calc((var(--phone-nav-width, 76px) - 36px) / 2);
+  z-index: 10;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  background: var(--surface-control);
+  color: var(--text-strong);
+  -webkit-app-region: no-drag;
+}
+
+.app.layout-phone .phone-shell-toggle svg {
+  width: 19px;
+  height: 19px;
+}

@@ -1,0 +1,36 @@
+import type { ReactNode } from "react";
+import FileText from "lucide-react/dist/esm/icons/file-text";
+import MessagesSquare from "lucide-react/dist/esm/icons/messages-square";
+
+type TabletNavTab = "chat" | "git" | "log";
+
+type TabletNavProps = {
+  activeTab: TabletNavTab;
+  onSelect: (tab: TabletNavTab) => void;
+};
+
+const tabs: { id: TabletNavTab; label: string; icon: ReactNode }[] = [
+  { id: "chat", label: "Chat", icon: <MessagesSquare className="tablet-nav-icon" /> },
+  { id: "log", label: "Preview", icon: <FileText className="tablet-nav-icon" /> },
+];
+
+export function TabletNav({ activeTab, onSelect }: TabletNavProps) {
+  return (
+    <nav className="tablet-nav" aria-label="Workspace">
+      <div className="tablet-nav-group">
+        {tabs.map((tab) => (
+          <button
+            key={tab.id}
+            type="button"
+            className={`tablet-nav-item ${activeTab === tab.id ? "active" : ""}`}
+            onClick={() => onSelect(tab.id)}
+            aria-current={activeTab === tab.id ? "page" : undefined}
+          >
+            {tab.icon}
+            <span className="tablet-nav-label">{tab.label}</span>
+          </button>
+        ))}
+      </div>
+    </nav>
+  );
+}

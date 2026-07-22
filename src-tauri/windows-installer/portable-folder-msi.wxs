@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product
+    Id="*"
+    Name="LadonX"
+    Language="1033"
+    Version="$(var.ProductVersion)"
+    Manufacturer="LadonX"
+    UpgradeCode="{07E3C7E0-9EFC-408E-87F5-712FDE4705BE}">
+    <Package InstallerVersion="500" Compressed="yes" InstallScope="perUser" />
+
+    <MajorUpgrade AllowSameVersionUpgrades="yes" DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Icon Id="LadonXIcon" SourceFile="$(var.IconFile)" />
+    <Property Id="ARPPRODUCTICON" Value="LadonXIcon" />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT" Value="LadonX has been installed successfully. A desktop shortcut named LadonX is ready to use." />
+    <Property Id="REINSTALLMODE" Value="amus" />
+
+    <Condition Message="This installer only supports 64-bit Windows.">VersionNT64</Condition>
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="AppDataFolder">
+        <Directory Id="INSTALLDIR" Name="com.ladonx.app" />
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop" />
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="LadonX" Level="1">
+      <ComponentRef Id="PortableFilesComponent" />
+      <ComponentRef Id="DesktopShortcutComponent" />
+    </Feature>
+
+    <DirectoryRef Id="INSTALLDIR">
+      <Component Id="PortableFilesComponent" Guid="{77AFE239-35A0-4650-8801-5E738DF67973}" Win64="yes">
+        <File Id="LadonxExe" Source="$(var.PortableDir)/ladonx.exe" KeyPath="yes" />
+        <File Id="LadonxDaemonExe" Source="$(var.PortableDir)/ladonx_daemon.exe" />
+        <File Id="LadonxDaemonCtlExe" Source="$(var.PortableDir)/ladonx_daemonctl.exe" />
+        <File Id="WebView2LoaderDll" Source="$(var.PortableDir)/WebView2Loader.dll" />
+        <File Id="LibStdCppDll" Source="$(var.PortableDir)/libstdc++-6.dll" />
+        <File Id="LibGccSSehDll" Source="$(var.PortableDir)/libgcc_s_seh-1.dll" />
+        <File Id="LibWinPthreadDll" Source="$(var.PortableDir)/libwinpthread-1.dll" />
+      </Component>
+    </DirectoryRef>
+
+  </Product>
+
+  <Fragment>
+    <UI>
+      <TextStyle Id="WixUI_Font_Normal" FaceName="Tahoma" Size="8" />
+      <TextStyle Id="WixUI_Font_Bigger" FaceName="Tahoma" Size="12" />
+      <Property Id="DefaultUIFont" Value="WixUI_Font_Normal" />
+
+      <DialogRef Id="ExitDialog" />
+      <Publish Dialog="ExitDialog" Control="Finish" Event="EndDialog" Value="Return" Order="999" />
+
+      <InstallUISequence>
+        <Show Dialog="ExitDialog" OnExit="success" Overridable="yes" />
+      </InstallUISequence>
+
+      <AdminUISequence>
+        <Show Dialog="ExitDialog" OnExit="success" Overridable="yes" />
+      </AdminUISequence>
+    </UI>
+
+    <UIRef Id="WixUI_Common" />
+  </Fragment>
+
+  <Fragment>
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="DesktopShortcutComponent" Guid="{242FC8A6-FB3C-42B4-8C16-42485EA02B78}">
+        <Shortcut
+          Id="DesktopShortcut"
+          Name="LadonX"
+          Description="Launch LadonX"
+          Target="[INSTALLDIR]ladonx.exe"
+          WorkingDirectory="INSTALLDIR"
+          Icon="LadonXIcon"
+          IconIndex="0" />
+        <RegistryValue Root="HKCU" Key="Software\LadonX" Name="DesktopShortcut" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

@@ -1,0 +1,552 @@
+.auth-gate-app {
+  width: 100%;
+  height: 100%;
+}
+
+.auth-gate {
+  width: 100vw;
+  height: var(--app-height, 100dvh);
+  min-height: var(--app-height, 100dvh);
+  display: grid;
+  place-items: center;
+  padding: 56px 20px 40px;
+  background: #111111;
+  color: #f4f4f5;
+  font-family: var(--ui-font-family);
+  -webkit-app-region: drag;
+}
+
+.auth-gate-modal {
+  position: fixed;
+  inset: 0;
+  z-index: var(--ds-layer-modal, 40);
+  background: transparent;
+  pointer-events: none;
+}
+
+.auth-gate-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(6, 8, 12, 0.28);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events: none;
+}
+
+.auth-gate-app:has(.app.reduced-transparency) + .auth-gate-modal .auth-gate-backdrop {
+  background: rgb(6, 8, 12);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.auth-gate-panel {
+  position: relative;
+  width: min(340px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 1;
+  -webkit-app-region: no-drag;
+}
+
+.auth-gate-modal .auth-gate-panel {
+  width: min(390px, calc(100vw - 48px));
+  max-height: calc(var(--app-height, 100dvh) - 72px);
+  padding: 24px 22px 22px;
+  overflow-y: auto;
+  border: 0;
+  border-radius: 16px;
+  background:
+    linear-gradient(180deg, rgba(38, 38, 40, 0.98), rgba(22, 22, 24, 0.98)),
+    #1c1c1f;
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+}
+
+.auth-gate-panel:focus {
+  outline: none;
+}
+
+.auth-gate-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: rgba(245, 245, 245, 0.6);
+  cursor: pointer;
+}
+
+.auth-gate-close:hover,
+.auth-gate-close:focus-visible {
+  color: #f5f5f4;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.auth-gate-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.auth-gate-icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+}
+
+.auth-gate-icon img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.auth-gate h1 {
+  margin: 6px 0 4px;
+  font-size: 24px;
+  line-height: 1.08;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.auth-gate-form,
+.auth-gate-tabs,
+.auth-gate-wechat,
+.auth-gate-download-card {
+  width: min(340px, 100%);
+}
+
+.auth-gate-download-card {
+  margin-top: 10px;
+  padding: 12px 12px 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03)),
+    rgba(17, 17, 17, 0.92);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.auth-gate-download-card.is-error {
+  border-color: rgba(255, 138, 138, 0.45);
+}
+
+.auth-gate-download-head,
+.auth-gate-download-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.auth-gate-download-head span,
+.auth-gate-download-head strong,
+.auth-gate-download-meta span {
+  margin: 0;
+  line-height: 1.35;
+}
+
+.auth-gate-download-head span {
+  color: rgba(245, 245, 245, 0.92);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.auth-gate-download-head strong {
+  color: #f5f5f4;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.auth-gate-download-bar {
+  width: 100%;
+  height: 7px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.09);
+}
+
+.auth-gate-download-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #f5f5f4, #93c5fd);
+  transition: width 160ms ease;
+}
+
+.auth-gate-download-meta {
+  color: rgba(245, 245, 245, 0.5);
+  font-size: 11px;
+}
+
+.auth-gate-tabs {
+  margin-top: 12px;
+  min-height: 34px;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.auth-gate-tabs button {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 28px;
+  border: 0;
+  border-radius: 999px;
+  color: rgba(245, 245, 245, 0.62);
+  background: transparent;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition:
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.auth-gate-tabs button:hover,
+.auth-gate-tabs button:focus-visible,
+.auth-gate-tabs button.is-active {
+  color: #f5f5f4;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.auth-gate-form {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.auth-gate-form .auth-gate-primary {
+  margin-top: 8px;
+}
+
+.auth-gate-wechat {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.auth-gate-qr {
+  width: 300px;
+  min-height: 420px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+}
+
+.auth-gate-qr img {
+  width: 112px;
+  height: 112px;
+  display: block;
+  object-fit: contain;
+}
+
+.auth-gate-wechat-frame {
+  width: 300px;
+  height: 420px;
+  display: block;
+  overflow: hidden;
+  border-radius: 10px;
+  border: 0;
+}
+
+.auth-gate-qr .auth-gate-wechat-mark {
+  width: 58px;
+  height: 58px;
+}
+
+.auth-gate-wechat-refresh {
+  display: grid;
+  place-items: center;
+  width: 112px;
+  height: 112px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  cursor: pointer;
+  transition:
+    transform 140ms ease,
+    filter 140ms ease,
+    opacity 140ms ease;
+}
+
+.auth-gate-wechat-refresh:hover:not(:disabled),
+.auth-gate-wechat-refresh:focus-visible:not(:disabled) {
+  transform: scale(1.04);
+  filter: drop-shadow(0 10px 24px rgba(7, 193, 96, 0.22));
+}
+
+.auth-gate-wechat-refresh:focus-visible {
+  outline: 2px solid rgba(7, 193, 96, 0.7);
+  outline-offset: 6px;
+}
+
+.auth-gate-wechat-refresh:disabled {
+  cursor: default;
+  opacity: 0.72;
+}
+
+.auth-gate-wechat-status {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  display: grid;
+  place-items: center;
+}
+
+.auth-gate-wechat-status-spinner {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  width: 18px;
+  height: 18px;
+  color: rgba(245, 245, 245, 0.72);
+  animation: auth-gate-spin 900ms linear infinite;
+}
+
+.auth-gate-wechat p,
+.auth-gate-wechat span {
+  margin: 0;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.auth-gate-wechat p {
+  color: rgba(245, 245, 245, 0.9);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.auth-gate-wechat span {
+  color: rgba(245, 245, 245, 0.46);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.auth-gate-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: rgba(245, 245, 245, 0.76);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.auth-gate-field input {
+  width: 100%;
+  min-height: 38px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 0 12px;
+  color: #f5f5f4;
+  background: rgba(255, 255, 255, 0.06);
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: 0;
+  outline: none;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.auth-gate-field input::placeholder {
+  color: rgba(245, 245, 245, 0.35);
+}
+
+.auth-gate-field input:focus {
+  border-color: rgba(145, 160, 255, 0.72);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(145, 160, 255, 0.16);
+}
+
+.auth-gate-field input:disabled {
+  cursor: default;
+  opacity: 0.62;
+}
+
+.auth-gate-primary {
+  width: 100%;
+  min-height: 40px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  cursor: pointer;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    opacity 140ms ease;
+}
+
+.auth-gate-primary {
+  color: #202124;
+  background: #f5f5f4;
+}
+
+.auth-gate-primary:hover:not(:disabled),
+.auth-gate-primary:focus-visible:not(:disabled) {
+  background: #ffffff;
+}
+
+.auth-gate-primary:disabled {
+  cursor: default;
+  opacity: 0.62;
+}
+
+.auth-gate-spinner {
+  width: 18px;
+  height: 18px;
+  animation: auth-gate-spin 900ms linear infinite;
+}
+
+.auth-gate-muted,
+.auth-gate-error {
+  max-width: min(340px, 100%);
+  margin: 2px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.auth-gate-muted {
+  color: rgba(245, 245, 245, 0.56);
+}
+
+.auth-gate-error {
+  color: #ff8a8a;
+}
+
+.auth-gate-success-dialog {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 999;
+}
+
+.auth-gate-success-dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.58);
+}
+
+.auth-gate-success-dialog-card {
+  position: relative;
+  width: min(300px, calc(100% - 32px));
+  padding: 28px 24px 22px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: #1e1e20;
+  color: #f4f4f5;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.auth-gate-success-dialog-title {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.auth-gate-success-dialog-text {
+  margin: 0;
+  color: rgba(245, 245, 245, 0.65);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.auth-gate-success-dialog-card .auth-gate-primary {
+  width: 100%;
+}
+
+@keyframes auth-gate-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 720px) {
+  .auth-gate {
+    padding: 40px 16px 24px;
+  }
+
+.auth-gate-modal .auth-gate-panel {
+    width: min(360px, calc(100vw - 28px));
+    max-height: calc(var(--app-height, 100dvh) - 48px);
+    padding: 24px 18px 20px;
+  }
+
+  .auth-gate-panel {
+    gap: 12px;
+  }
+
+  .auth-gate h1 {
+    font-size: 23px;
+    text-align: center;
+  }
+
+  .auth-gate-tabs {
+    margin-top: 10px;
+  }
+
+  .auth-gate-qr {
+    width: min(300px, calc(100vw - 76px));
+    min-height: 420px;
+  }
+
+  .auth-gate-wechat-frame {
+    width: min(300px, calc(100vw - 76px));
+    height: 420px;
+    min-height: 420px;
+  }
+
+  .auth-gate-qr img {
+    width: 58px;
+    height: 58px;
+  }
+
+  .auth-gate-field input {
+    min-height: 38px;
+  }
+
+  .auth-gate-primary {
+    min-height: 40px;
+    font-size: 14px;
+  }
+}

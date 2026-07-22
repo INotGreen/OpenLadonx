@@ -1,0 +1,225 @@
+.app.layout-phone {
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: none;
+  grid-template-rows: none;
+}
+
+.app.layout-phone.reduced-transparency,
+.app.layout-phone.reduced-transparency .compact-shell,
+.app.layout-phone.reduced-transparency .compact-panel {
+  background: var(--surface-messages);
+}
+
+.app.layout-phone .drag-strip {
+  height: 22px;
+}
+
+.app.layout-phone .sidebar {
+  flex-direction: column;
+  align-items: stretch;
+  overflow-x: hidden;
+  padding-top: calc(32px + env(safe-area-inset-top));
+  padding-bottom: 16px;
+  background: var(--surface-messages);
+}
+
+.app.layout-phone .compact-topbar {
+  padding-top: calc(10px + env(safe-area-inset-top));
+}
+
+.app.layout-phone .phone-shell {
+  --phone-sidebar-width: min(80vw, 360px);
+}
+
+.app.layout-phone .home {
+  padding-top: calc(44px + env(safe-area-inset-top));
+}
+
+.app.layout-phone .debug-panel.full .debug-header {
+  padding-top: calc(10px + env(safe-area-inset-top));
+}
+
+.app.layout-phone .messages-full {
+  padding: calc(56px + env(safe-area-inset-top)) 16px 12px;
+}
+
+.app.layout-phone .composer {
+  padding: 10px 12px calc(10px + var(--phone-composer-safe-bottom, 0px));
+  border-top: none;
+}
+
+.app.layout-phone .compact-panel {
+  min-width: 0;
+}
+
+.app.layout-phone .phone-sidebar-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 15, 0.42);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease;
+  z-index: 25;
+}
+
+.app.layout-phone .phone-sidebar-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.app.layout-phone .phone-sidebar-drawer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: var(--phone-sidebar-width);
+  max-width: calc(100vw - 24px);
+  transform: translateX(calc(-100% - 12px));
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    transform 220ms ease,
+    opacity 180ms ease;
+  z-index: 30;
+}
+
+.app.layout-phone .phone-sidebar-drawer.is-open {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.app.layout-phone .phone-sidebar-drawer .sidebar {
+  height: 100%;
+  border-right: 1px solid var(--border-subtle);
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.32);
+}
+
+.app.layout-phone .phone-sidebar-drawer .sidebar-bottom-rail {
+  position: sticky;
+  bottom: calc(10px + env(safe-area-inset-bottom));
+  left: 0;
+  margin-left: 0;
+  margin-right: auto;
+  margin-bottom: 0;
+  padding-top: 8px;
+  border-top: none;
+  align-items: flex-start;
+  z-index: 2;
+}
+
+.app.layout-phone .phone-sidebar-drawer .sidebar-bottom-actions.is-compact {
+  justify-content: flex-start;
+}
+
+.app.layout-phone .phone-sidebar-drawer .sidebar-utility-actions {
+  justify-content: flex-start;
+}
+
+.app.layout-phone .phone-sidebar-drawer .sidebar-utility-button {
+  min-width: auto;
+  padding-right: 8px;
+}
+
+html[data-mobile-composer-focus="true"] .app.layout-phone {
+  --phone-composer-safe-bottom: env(safe-area-inset-bottom);
+}
+
+.compact-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 0 24px;
+}
+
+.compact-empty h3 {
+  margin: 0;
+  font-size: 16px;
+  color: var(--text-strong);
+}
+
+.compact-empty p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.compact-git {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+  min-height: 0;
+}
+
+.compact-git-list {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app.layout-phone .compact-git-list > .ds-panel {
+  flex: 1;
+  min-height: 0;
+  border-radius: 0;
+  border: none;
+}
+
+.compact-git-viewer {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app.layout-phone .compact-git-viewer .diff-viewer {
+  height: 100%;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.compact-git-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px 6px;
+  border-bottom: 1px solid var(--border-subtle);
+  background: var(--surface-topbar);
+}
+
+.app.layout-phone .compact-git-back {
+  border-bottom: none;
+}
+
+.app.layout-phone .compact-panel > .compact-git-back:first-child {
+  padding-top: calc(8px + env(safe-area-inset-top));
+}
+
+.compact-git-switch-button {
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-control);
+  color: var(--text-subtle);
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.compact-git-switch-button.active {
+  color: var(--text-strong);
+  border-color: var(--border-accent-soft);
+  background: var(--surface-active);
+}
+
+.compact-git-switch-button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}

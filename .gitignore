@@ -1,0 +1,56 @@
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Frontend build output
+dist/
+dist-ssr/
+desktop-release/
+output/
+
+# Tauri and Rust build output
+src-tauri/target/
+src-tauri/target-release/
+src-tauri/gen/schemas/
+
+# Local configuration and secrets
+.env
+.env.*
+*.local
+.testflight.local.env
+src-tauri/ladonx_auth.json
+src-tauri/tauri.ios.local.conf.json
+
+# Bundled local toolchains and generated resources
+.toolchains/
+src-tauri/resources/*
+public/assets/material-icons/
+
+# Editor and OS files
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Misc local agent/cache folders
+.agent/
+.agents/
+.claude/
+.codex-worktrees/
+.codegraph/
+.cursor/
+result
+skills-lock.json

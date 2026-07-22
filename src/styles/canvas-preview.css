@@ -1,0 +1,413 @@
+/* Global resets removed — embedded inside LadonX which has its own resets.
+   The canvas lives in a positioned container owned by FilePreviewPanel. */
+
+.cowart-canvas-root {
+  --cowart-canvas-bg: #16191f;
+  --cowart-canvas-text: #edf2f7;
+  --cowart-status-text: #a0aec0;
+  --cowart-divider: rgb(255 255 255 / 12%);
+  --cowart-notice-text: #f4f7fb;
+  --cowart-notice-link: #8ab4ff;
+  --cowart-notice-bg: rgb(79 55 14 / 92%);
+  --cowart-notice-border: rgb(230 198 92 / 45%);
+  --cowart-notice-shadow: 0 8px 28px rgb(0 0 0 / 32%);
+  --cowart-notice-list-bg: #1f2430;
+  --cowart-notice-list-border: rgb(255 255 255 / 12%);
+  --cowart-notice-list-shadow: 0 12px 36px rgb(0 0 0 / 36%);
+  --cowart-focus-bg: #fff;
+  --cowart-focus-border: #2f80ed;
+  --cowart-focus-ring: 0 0 0 2px rgb(47 128 237 / 18%);
+  --cowart-lock-hover-bg: rgb(255 255 255 / 8%);
+  --cowart-lock-hover-text: #fff;
+  --cowart-active-accent: #5ea2ff;
+  --cowart-drop-bg: rgb(94 162 255 / 12%);
+  --cowart-drop-border: #5ea2ff;
+  --cowart-drop-text: #dcebff;
+  --cowart-drop-spinner-track: rgb(94 162 255 / 24%);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  background: var(--cowart-canvas-bg);
+  color: var(--cowart-canvas-text);
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  overflow: hidden;
+}
+
+:root[data-theme="light"] .cowart-canvas-root {
+  --cowart-canvas-bg: #f7f5ef;
+  --cowart-canvas-text: #1f2430;
+  --cowart-status-text: #4a5568;
+  --cowart-divider: #d1d5db;
+  --cowart-notice-text: #1f2937;
+  --cowart-notice-link: #174ea6;
+  --cowart-notice-bg: #fff7d1;
+  --cowart-notice-border: #e6c65c;
+  --cowart-notice-shadow: 0 8px 28px rgb(31 41 55 / 16%);
+  --cowart-notice-list-bg: #fff;
+  --cowart-notice-list-border: #d1d5db;
+  --cowart-notice-list-shadow: 0 12px 36px rgb(31 41 55 / 18%);
+  --cowart-lock-hover-bg: #f1f3f5;
+  --cowart-lock-hover-text: #25282d;
+  --cowart-active-accent: #2f80ed;
+  --cowart-drop-bg: rgb(47 128 237 / 8%);
+  --cowart-drop-border: #2f80ed;
+  --cowart-drop-text: #2f80ed;
+  --cowart-drop-spinner-track: rgb(47 128 237 / 25%);
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .cowart-canvas-root {
+    --cowart-canvas-bg: #f7f5ef;
+    --cowart-canvas-text: #1f2430;
+    --cowart-status-text: #4a5568;
+    --cowart-divider: #d1d5db;
+    --cowart-notice-text: #1f2937;
+    --cowart-notice-link: #174ea6;
+    --cowart-notice-bg: #fff7d1;
+    --cowart-notice-border: #e6c65c;
+    --cowart-notice-shadow: 0 8px 28px rgb(31 41 55 / 16%);
+    --cowart-notice-list-bg: #fff;
+    --cowart-notice-list-border: #d1d5db;
+    --cowart-notice-list-shadow: 0 12px 36px rgb(31 41 55 / 18%);
+    --cowart-lock-hover-bg: #f1f3f5;
+    --cowart-lock-hover-text: #25282d;
+    --cowart-active-accent: #2f80ed;
+    --cowart-drop-bg: rgb(47 128 237 / 8%);
+    --cowart-drop-border: #2f80ed;
+    --cowart-drop-text: #2f80ed;
+    --cowart-drop-spinner-track: rgb(47 128 237 / 25%);
+  }
+}
+
+.cowart-canvas {
+  position: absolute;
+  inset: 0;
+  min-width: 0;
+  min-height: 0;
+}
+
+.cowart-skipped-records {
+  position: absolute;
+  z-index: 1000;
+  top: 12px;
+  left: 50%;
+  display: flex;
+  max-width: min(680px, calc(100vw - 32px));
+  padding: 10px 14px;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  color: var(--cowart-notice-text);
+  font-size: 13px;
+  line-height: 1.35;
+  background: var(--cowart-notice-bg);
+  border: 1px solid var(--cowart-notice-border);
+  border-radius: 8px;
+  box-shadow: var(--cowart-notice-shadow);
+  transform: translateX(-50%);
+}
+
+.cowart-skipped-records strong {
+  font-weight: 700;
+}
+
+.cowart-skipped-records details {
+  position: relative;
+}
+
+.cowart-skipped-records summary {
+  color: var(--cowart-notice-link);
+  cursor: pointer;
+}
+
+.cowart-skipped-records ul {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: min(640px, calc(100vw - 32px));
+  max-height: 260px;
+  padding: 12px 14px 12px 30px;
+  overflow: auto;
+  color: var(--cowart-notice-text);
+  background: var(--cowart-notice-list-bg);
+  border: 1px solid var(--cowart-notice-list-border);
+  border-radius: 8px;
+  box-shadow: var(--cowart-notice-list-shadow);
+}
+
+.cowart-skipped-records li + li {
+  margin-top: 8px;
+}
+
+.cowart-skipped-records code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+}
+
+.cowart-status {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  color: var(--cowart-status-text);
+}
+
+.cowart-toolbar-divider {
+  align-self: center;
+  flex: 0 0 auto;
+  width: 1px;
+  height: 22px;
+  margin: 0 4px;
+  pointer-events: none;
+  background: var(--cowart-divider);
+  border-radius: 1px;
+}
+
+.tlui-button__tool.cowart-annotation-toolbar-button {
+  display: inline-flex;
+  width: auto;
+  min-width: 76px;
+  padding: 0 12px;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+}
+
+.tlui-button__tool.cowart-annotation-toolbar-button::after {
+  inset: 4px;
+}
+
+.tlui-main-toolbar__overflow-content .cowart-annotation-toolbar-button {
+  display: none;
+}
+
+.cowart-annotation-toolbar-label {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  color: currentColor;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.cowart-annotation-tool-icon {
+  display: grid;
+  flex: 0 0 auto;
+  position: relative;
+  z-index: 1;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  color: currentColor;
+}
+
+.cowart-annotation-tool-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.tlui-style-panel.tlui-style-panel__wrapper:has(.cowart-ai-image-style-panel) {
+  width: min(240px, calc(100vw - 24px)) !important;
+  max-width: min(240px, calc(100vw - 24px)) !important;
+}
+
+.cowart-ai-image-style-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 18px;
+  border-top: 1px solid var(--tl-color-divider);
+}
+
+.cowart-ai-style-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cowart-ai-style-heading {
+  display: inline-flex;
+  align-items: center;
+  color: var(--tl-color-text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.cowart-ai-size-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 24px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+}
+
+.cowart-ai-size-field {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  height: 36px;
+  padding: 0 10px;
+  align-items: center;
+  gap: 7px;
+  background: var(--tl-color-muted-2);
+  border: 1px solid transparent;
+  border-radius: var(--tl-radius-2);
+}
+
+.cowart-ai-size-field:focus-within {
+  background: var(--cowart-focus-bg);
+  border-color: var(--cowart-focus-border);
+  box-shadow: var(--cowart-focus-ring);
+}
+
+.cowart-ai-size-field span {
+  color: var(--tl-color-text-2);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.cowart-ai-size-field input {
+  min-width: 0;
+  padding: 0;
+  color: var(--tl-color-text);
+  font: inherit;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  background: transparent;
+  border: 0;
+  outline: 0;
+}
+
+.cowart-ai-aspect-lock {
+  display: grid;
+  width: 24px;
+  height: 32px;
+  padding: 0;
+  place-items: center;
+  color: var(--tl-color-text-2);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--tl-radius-2);
+  cursor: pointer;
+}
+
+.cowart-ai-aspect-lock:hover {
+  background: var(--cowart-lock-hover-bg);
+  color: var(--cowart-lock-hover-text);
+}
+
+.cowart-ai-lock-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cowart-ai-aspect-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.cowart-ai-aspect-preset {
+  display: grid;
+  grid-template-rows: 22px auto;
+  min-height: 54px;
+  padding: 7px 6px 6px;
+  place-items: center;
+  gap: 5px;
+  color: var(--tl-color-text);
+  font: inherit;
+  font-size: 12px;
+  line-height: 1;
+  background: var(--tl-color-panel);
+  border: 1px solid var(--tl-color-muted-1);
+  border-radius: var(--tl-radius-2);
+  cursor: pointer;
+}
+
+.cowart-ai-aspect-preset:hover {
+  background: var(--tl-color-muted-2);
+  border-color: var(--tl-color-muted-1);
+}
+
+.cowart-ai-aspect-preset[aria-pressed="true"] {
+  color: var(--cowart-active-accent);
+  border-color: var(--cowart-active-accent);
+  box-shadow: inset 0 0 0 1px var(--cowart-active-accent);
+}
+
+.cowart-ai-aspect-preset[aria-pressed="true"] .cowart-ai-aspect-icon {
+  border-color: var(--cowart-active-accent);
+}
+
+.cowart-ai-aspect-icon {
+  display: block;
+  border: 2px solid var(--tl-color-text);
+  border-radius: 4px;
+}
+
+/* Drag-and-drop image overlay */
+.cowart-drop-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 999;
+  display: grid;
+  place-items: center;
+  background: var(--cowart-drop-bg);
+  border: 2px dashed var(--cowart-drop-border);
+  border-radius: 8px;
+  pointer-events: none;
+  animation: cowart-drop-fade-in 0.15s ease-out;
+}
+
+.cowart-drop-overlay-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--cowart-drop-text);
+  font-size: 15px;
+  font-weight: 500;
+  user-select: none;
+}
+
+.cowart-drop-overlay-icon {
+  width: 40px;
+  height: 40px;
+  opacity: 0.85;
+}
+
+.cowart-drop-overlay-text {
+  letter-spacing: 0.02em;
+}
+
+.cowart-drop-overlay-spinner {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid var(--cowart-drop-spinner-track);
+  border-top-color: var(--cowart-drop-border);
+  animation: cowart-drop-spin 0.8s linear infinite;
+}
+
+@keyframes cowart-drop-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes cowart-drop-spin {
+  to { transform: rotate(360deg); }
+}

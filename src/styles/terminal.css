@@ -1,0 +1,293 @@
+.terminal-panel {
+  border-top: 0px solid var(--border-subtle);
+  background: var(--surface-messages);
+  display: flex;
+  flex-direction: column;
+  grid-column: 1;
+  grid-row: 4;
+  height: var(--terminal-panel-height, 220px);
+  -webkit-app-region: no-drag;
+  --terminal-background: var(--surface-messages);
+  --terminal-foreground: var(--text-stronger);
+  --terminal-cursor: var(--text-stronger);
+  --terminal-selection: rgba(100, 200, 255, 0.25);
+  --terminal-font-family: var(--code-font-family);
+}
+
+.terminal-divider {
+  position: relative;
+  flex: 0 0 auto;
+  height: 8px;
+  margin: 0;
+  cursor: row-resize;
+  z-index: 3;
+  transition: opacity 160ms ease;
+  -webkit-app-region: no-drag;
+}
+
+.terminal-divider::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 1px;
+  background: rgba(99, 99, 99, 0.6);
+  opacity: 0.4;
+  transform: translateY(-0.5px);
+  transition: opacity 0.15s ease;
+}
+
+.terminal-divider:hover::after {
+  opacity: 0.9;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 1px;
+  font-size: 11px;
+}
+
+.terminal-header-row {
+  display: flex;
+  align-items: center;
+  border: 0px solid red;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+.terminal-tabs-list {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  padding-bottom: 2px;
+}
+
+.terminal-tabs-list::-webkit-scrollbar {
+  height: 4px;
+}
+
+.terminal-tabs-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 2px;
+}
+
+.terminal-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 200px;
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--text-faint);
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-app-region: no-drag;
+  flex-shrink: 0;
+}
+
+.terminal-tab:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-stronger);
+}
+
+.terminal-active-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: min(240px, 100%);
+  height: 28px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-stronger);
+  cursor: pointer;
+  white-space: nowrap;
+  -webkit-app-region: no-drag;
+}
+
+.terminal-active-tab:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.terminal-active-tab-icon {
+  flex-shrink: 0;
+}
+
+.terminal-active-tab-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.terminal-toolbar-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-faint);
+  flex-shrink: 0;
+  -webkit-app-region: no-drag;
+}
+
+.terminal-toolbar-icon:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text-stronger);
+}
+
+.terminal-toolbar-close {
+  margin-left: auto;
+}
+
+.terminal-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  overflow: hidden;
+  padding: 0;
+}
+
+.terminal-body > .terminal-shell {
+  flex: 1;
+  min-height: 0;
+}
+
+.terminal-shell {
+  position: relative;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  padding: 0;
+}
+
+.terminal-surface {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  border-radius: 0;
+  overflow: hidden;
+  background: var(--terminal-background);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  box-sizing: border-box;
+}
+
+.terminal-surface .xterm,
+.terminal-surface .xterm-screen,
+.terminal-surface .xterm-viewport {
+  background: var(--terminal-background) !important;
+}
+
+.terminal-surface .xterm,
+.terminal-surface .xterm-screen,
+.terminal-surface .xterm-scroll-area,
+.terminal-surface .xterm-decoration {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.terminal-surface .xterm::-webkit-scrollbar,
+.terminal-surface .xterm-screen::-webkit-scrollbar,
+.terminal-surface .xterm-scroll-area::-webkit-scrollbar,
+.terminal-surface .xterm-decoration::-webkit-scrollbar {
+  width: 0 !important;
+  height: 0 !important;
+  display: none !important;
+}
+
+.terminal-surface .xterm {
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 6px 12px 8px;
+}
+
+.terminal-surface .xterm-viewport {
+  height: 100% !important;
+  scrollbar-width: none;
+  scrollbar-color: transparent transparent;
+  transition: scrollbar-color 0.2s ease;
+}
+
+.terminal-surface:hover .xterm-viewport {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100, 100, 100, 0.5) transparent;
+}
+
+.terminal-surface .xterm-viewport::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+.terminal-surface:hover .xterm-viewport::-webkit-scrollbar {
+  width: 8px;
+  height: 0;
+  display: block;
+}
+
+.terminal-surface .xterm-viewport::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-surface .xterm-viewport::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.terminal-surface:hover .xterm-viewport::-webkit-scrollbar-thumb {
+  background-color: rgba(100, 100, 100, 0.5);
+}
+
+.terminal-surface:hover .xterm-viewport::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 100, 100, 0.7);
+}
+
+.terminal-surface .composition-view {
+  background: var(--terminal-background);
+  color: var(--terminal-foreground);
+}
+
+.terminal-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: var(--text-muted);
+  pointer-events: none;
+  text-align: center;
+  font-size: 12px;
+  padding: 16px;
+}
+
+.terminal-status {
+  max-width: 280px;
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 8px 12px;
+}

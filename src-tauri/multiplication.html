@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>99 乘法表</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f3ea;
+        --panel: #ffffff;
+        --text: #202124;
+        --muted: #62646a;
+        --line: #ded8cc;
+        --accent: #256f6c;
+        --accent-strong: #174e4b;
+        --cell: #fbfaf7;
+        --shadow: 0 18px 45px rgba(31, 36, 42, 0.12);
+      }
+
+      body.dark {
+        color-scheme: dark;
+        --bg: #171a1f;
+        --panel: #22262d;
+        --text: #f4f0e8;
+        --muted: #b8b1a5;
+        --line: #393f49;
+        --accent: #7cc8bd;
+        --accent-strong: #a4ded5;
+        --cell: #292e36;
+        --shadow: 0 18px 45px rgba(0, 0, 0, 0.35);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        color: var(--text);
+        background: radial-gradient(circle at top left, rgba(37, 111, 108, 0.16), transparent 32rem), var(--bg);
+      }
+
+      main {
+        width: min(1120px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 48px 0;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 28px;
+      }
+
+      h1 {
+        margin: 0 0 8px;
+        font-size: clamp(2rem, 4vw, 4rem);
+        letter-spacing: 0;
+      }
+
+      p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.6;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      button {
+        min-height: 42px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 0 14px;
+        color: var(--text);
+        background: var(--panel);
+        box-shadow: none;
+        cursor: pointer;
+        font: inherit;
+      }
+
+      button.primary {
+        border-color: var(--accent);
+        color: white;
+        background: var(--accent);
+      }
+
+      body.dark button.primary {
+        color: #12201f;
+        background: var(--accent-strong);
+      }
+
+      .table-wrap {
+        overflow-x: auto;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--panel);
+        box-shadow: var(--shadow);
+      }
+
+      table {
+        width: 100%;
+        min-width: 780px;
+        border-collapse: collapse;
+      }
+
+      td {
+        width: 11.11%;
+        height: 64px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        text-align: center;
+        vertical-align: middle;
+        background: var(--cell);
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+      }
+
+      td.empty {
+        background: transparent;
+        border-color: transparent;
+      }
+
+      .toast {
+        min-height: 24px;
+        margin-top: 14px;
+        color: var(--accent-strong);
+        font-weight: 600;
+      }
+
+      @media (max-width: 720px) {
+        main {
+          width: min(100vw - 20px, 1120px);
+          padding: 28px 0;
+        }
+
+        .topbar {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .actions {
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        button {
+          flex: 1 1 140px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="topbar" aria-label="页面标题和操作">
+        <div>
+          <h1>99 乘法表</h1>
+          <p>一个可以直接打开的小页面，顺手加了主题切换和复制功能。</p>
+        </div>
+        <div class="actions">
+          <button id="themeButton" type="button">切换深色</button>
+          <button class="primary" id="copyButton" type="button">复制乘法表</button>
+        </div>
+      </section>
+
+      <section class="table-wrap" aria-label="99 乘法表">
+        <table id="multiplicationTable"></table>
+      </section>
+      <p class="toast" id="toast" role="status" aria-live="polite"></p>
+    </main>
+
+    <script>
+      const table = document.querySelector("#multiplicationTable");
+      const copyButton = document.querySelector("#copyButton");
+      const themeButton = document.querySelector("#themeButton");
+      const toast = document.querySelector("#toast");
+
+      function buildTable() {
+        const fragment = document.createDocumentFragment();
+
+        for (let row = 1; row <= 9; row += 1) {
+          const tr = document.createElement("tr");
+
+          for (let col = 1; col <= 9; col += 1) {
+            const td = document.createElement("td");
+            if (col <= row) {
+              td.textContent = `${col} x ${row} = ${col * row}`;
+            } else {
+              td.className = "empty";
+            }
+            tr.appendChild(td);
+          }
+
+          fragment.appendChild(tr);
+        }
+
+        table.appendChild(fragment);
+      }
+
+      function getTableText() {
+        return Array.from({ length: 9 }, (_, rowIndex) => {
+          const row = rowIndex + 1;
+          return Array.from({ length: row }, (_, colIndex) => {
+            const col = colIndex + 1;
+            return `${col}x${row}=${col * row}`;
+          }).join("\t");
+        }).join("\n");
+      }
+
+      themeButton.addEventListener("click", () => {
+        document.body.classList.toggle("dark");
+        themeButton.textContent = document.body.classList.contains("dark") ? "切换浅色" : "切换深色";
+      });
+
+      copyButton.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(getTableText());
+        toast.textContent = "已复制到剪贴板";
+        window.setTimeout(() => {
+          toast.textContent = "";
+        }, 1800);
+      });
+
+      buildTable();
+    </script>
+  </body>
+</html>

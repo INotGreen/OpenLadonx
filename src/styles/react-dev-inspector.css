@@ -1,0 +1,108 @@
+.react-dev-inspector-dock {
+  position: fixed;
+  left: 50%;
+  bottom: max(9px, env(safe-area-inset-bottom));
+  z-index: 10000;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 29px;
+  padding: 0 7px 0 11px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 999px;
+  background: rgba(12, 13, 14, 0.94);
+  color: rgba(255, 255, 255, 0.72);
+  box-shadow:
+    0 9px 19px rgba(0, 0, 0, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateX(-50%);
+  -webkit-app-region: no-drag;
+  user-select: none;
+}
+
+.react-dev-inspector-brand {
+  width: 14px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.react-dev-inspector-separator {
+  width: 1px;
+  height: 13px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.react-dev-inspector-toggle {
+  width: 21px;
+  height: 21px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #11d889;
+  box-shadow: none;
+}
+
+.react-dev-inspector-toggle:hover:not(:disabled),
+.react-dev-inspector-toggle:focus-visible {
+  background: rgba(17, 216, 137, 0.1);
+  color: #22e69c;
+  outline: none;
+}
+
+.react-dev-inspector-toggle.is-active {
+  background: rgba(17, 216, 137, 0.16);
+  color: #28f0a6;
+}
+
+.react-dev-inspector-toggle.is-active::before {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  border: 1px solid rgba(40, 240, 166, 0.38);
+  border-radius: inherit;
+}
+
+.react-dev-inspector-icon {
+  width: 13px;
+  height: 13px;
+}
+
+@media (max-width: 560px) {
+  .react-dev-inspector-dock {
+    bottom: max(6px, env(safe-area-inset-bottom));
+    height: 25px;
+    padding: 0 6px 0 9px;
+    gap: 5px;
+  }
+
+  .react-dev-inspector-brand {
+    width: 12px;
+    height: 12px;
+    font-size: 11px;
+  }
+
+  .react-dev-inspector-separator {
+    height: 11px;
+  }
+
+  .react-dev-inspector-toggle {
+    width: 18px;
+    height: 18px;
+  }
+
+  .react-dev-inspector-icon {
+    width: 11px;
+    height: 11px;
+  }
+}

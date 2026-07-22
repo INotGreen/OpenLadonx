@@ -1,0 +1,101 @@
+.approval-toasts {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(460px, calc(100vw - 48px));
+  max-height: min(420px, calc(100vh - 120px));
+  overflow: visible;
+  z-index: 5;
+  pointer-events: auto;
+  -webkit-app-region: no-drag;
+  transform: translate(-50%, -50%);
+}
+
+.approval-toast {
+  --ds-toast-enter-duration: 0.2s;
+  display: grid;
+  gap: 8px;
+}
+
+.approval-toast-header {
+  margin-bottom: 0;
+}
+
+.approval-toast-title {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.approval-toast-workspace {
+  font-size: 12px;
+  color: var(--text-faint);
+}
+
+.approval-toast-method {
+  font-size: 12px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  color: var(--text);
+}
+
+.approval-toast-details {
+  display: grid;
+  gap: 6px;
+}
+
+.approval-toast-detail {
+  display: grid;
+  gap: 3px;
+}
+
+.approval-toast-detail-label {
+  font-size: 11px;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.approval-toast-detail-value {
+  font-size: 12px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.approval-toast-command {
+  display: block;
+  font-family: var(--code-font-family);
+  font-size: 11px;
+  line-height: 1.35;
+  color: var(--text);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-height: calc(1.35em * 6 + 16px);
+  overflow-y: auto;
+  border-radius: 8px;
+  background: var(--surface-card-muted);
+  padding: 8px;
+}
+
+.approval-toast-detail-empty {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.approval-toast-actions {
+  margin-top: 2px;
+}
+
+.approval-toast-remember {
+  white-space: nowrap;
+}
+
+@media (max-width: 960px) {
+  .approval-toasts {
+    width: min(420px, calc(100vw - 32px));
+    max-height: min(360px, calc(100vh - 96px));
+  }
+}
