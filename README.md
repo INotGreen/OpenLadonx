@@ -2,25 +2,36 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-![Version](https://img.shields.io/badge/version-0.7.68-blue)
-![Tauri](https://img.shields.io/badge/Tauri-2-24c8db)
-![React](https://img.shields.io/badge/React-19-61dafb)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6)
-![License](https://img.shields.io/badge/license-see%20LICENSE-lightgrey)
+![Version](https://img.shields.io/badge/version-0.7.68-ff4d8d?style=for-the-badge)
+![Desktop](https://img.shields.io/badge/Desktop-Agent%20Workspace-7c3aed?style=for-the-badge)
+![Tauri](https://img.shields.io/badge/Tauri-2-24c8db?style=for-the-badge&logo=tauri&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react&logoColor=06111f)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6?style=for-the-badge&logo=typescript&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-Tauri%20Core-f97316?style=for-the-badge&logo=rust&logoColor=white)
+![Model Routing](https://img.shields.io/badge/OpenAI%20%2B%20Anthropic-Compatible-10b981?style=for-the-badge)
+![Plugins](https://img.shields.io/badge/Skills%20%2B%20Plugins%20%2B%20MCP-06b6d4?style=for-the-badge)
+![License](https://img.shields.io/badge/license-see%20LICENSE-facc15?style=for-the-badge)
 
-OpenLadonx is a native AI coding workspace for Codex-style agent workflows. It brings chat threads, workspace context, git review, terminals, model routing, skills, plugins, MCP server status, and local desktop integrations into one Tauri app.
+OpenLadonx is an open desktop workspace for modern AI coding agents. It brings Codex-style and Claude Code-style workflows into one native Tauri app: chat threads, workspace context, git review, terminals, model routing, skills, plugins, MCP server status, and local desktop integrations.
 
-Use the built-in provider path, or connect your own OpenAI Responses-compatible and Anthropic Messages-compatible model endpoints. OpenLadonx is designed for teams and power users who want a local-first agent cockpit instead of yet another browser tab.
+Codex and Claude Code both offer powerful agent experiences, but their official desktop clients are closed-source. OpenLadonx takes a different path: it integrates the desktop-side workflow patterns developers already like, opens most of the implementation, and gives builders a real codebase they can study, modify, fork, and reshape into the agent desktop they actually want.
+
+Use the built-in provider path, or connect your own OpenAI Responses-compatible and Anthropic Messages-compatible model endpoints. OpenLadonx is designed for developers, teams, and agent tinkerers who want a local-first command center instead of another locked-down black box or browser tab.
 
 ![OpenLadonx proxy architecture](assets/flow.png)
 
-## Why OpenLadonx
+## What OpenLadonx Does
 
-- **One desktop cockpit** for agent conversations, workspaces, files, terminals, diffs, branches, issues, and pull requests.
-- **Bring your own models** through OpenAI Responses-compatible `/v1/responses` endpoints or Anthropic Messages-compatible `/v1/messages` endpoints.
-- **Native workflow surfaces** powered by Tauri 2, Rust, React 19, TypeScript, Vite, and local filesystem integration.
-- **Extensible agent environment** with skills, plugins, prompts, MCP tool-call rendering, and workspace `AGENTS.md` editing.
-- **Local configuration control** for model credentials, Codex `config.toml`, plugin state, MCP status, and desktop settings.
+OpenLadonx turns the desktop client itself into something developers can own. Instead of treating the agent UI as a sealed product, it exposes the practical building blocks behind a serious AI coding workspace: model connections, prompt and instruction surfaces, local workspace awareness, terminal access, git context, plugin state, MCP visibility, and native app integration.
+
+- **Unifies agent workflows** for Codex-style and Claude Code-style development in a single desktop app.
+- **Opens the desktop layer** so developers can inspect, fork, and rebuild the parts of the agent experience that are usually hidden inside closed-source clients.
+- **Connects your own models** through OpenAI Responses-compatible `/v1/responses` endpoints or Anthropic Messages-compatible `/v1/messages` endpoints.
+- **Keeps real work close** with conversations, workspaces, files, terminals, diffs, branches, issues, and pull requests in one native surface.
+- **Makes extension first-class** with skills, plugins, prompts, MCP tool-call rendering, and workspace `AGENTS.md` editing.
+- **Gives local configuration control** for model credentials, Codex `config.toml`, plugin state, MCP status, and desktop settings.
+
+If you are building an internal agent platform, experimenting with custom models, designing a new coding-agent UX, or just tired of waiting for closed desktop clients to expose the one feature you need, OpenLadonx is meant to be a strong starting point.
 
 ## Model Routing
 

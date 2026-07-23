@@ -2,25 +2,36 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-![Version](https://img.shields.io/badge/version-0.7.68-blue)
-![Tauri](https://img.shields.io/badge/Tauri-2-24c8db)
-![React](https://img.shields.io/badge/React-19-61dafb)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6)
-![License](https://img.shields.io/badge/license-see%20LICENSE-lightgrey)
+![Version](https://img.shields.io/badge/version-0.7.68-ff4d8d?style=for-the-badge)
+![Desktop](https://img.shields.io/badge/Desktop-Agent%20Workspace-7c3aed?style=for-the-badge)
+![Tauri](https://img.shields.io/badge/Tauri-2-24c8db?style=for-the-badge&logo=tauri&logoColor=white)
+![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react&logoColor=06111f)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6?style=for-the-badge&logo=typescript&logoColor=white)
+![Rust](https://img.shields.io/badge/Rust-Tauri%20Core-f97316?style=for-the-badge&logo=rust&logoColor=white)
+![Model Routing](https://img.shields.io/badge/OpenAI%20%2B%20Anthropic-Compatible-10b981?style=for-the-badge)
+![Plugins](https://img.shields.io/badge/Skills%20%2B%20Plugins%20%2B%20MCP-06b6d4?style=for-the-badge)
+![License](https://img.shields.io/badge/license-see%20LICENSE-facc15?style=for-the-badge)
 
-OpenLadonx 是一个原生桌面端 AI 编程工作台，面向 Codex 风格的 agent 工作流。它把聊天线程、工作区上下文、Git 审查、终端、模型路由、skills、plugins、MCP 服务状态和本地桌面集成放进一个 Tauri 应用。
+OpenLadonx 是一个面向现代 AI 编程智能体的开源桌面工作台。它把 Codex 风格和 Claude Code 风格的工作流整合进一个原生 Tauri 应用：聊天线程、工作区上下文、Git 审查、终端、模型路由、skills、plugins、MCP 服务状态和本地桌面集成，都可以在同一个桌面界面里完成。
 
-你可以使用内置服务商路径，也可以接入自己的 OpenAI Responses 兼容端点和 Anthropic Messages 兼容端点。OpenLadonx 面向团队和高频用户，适合需要本地优先 agent 控制台，而不是再开一个浏览器标签页的工作方式。
+Codex 和 Claude Code 都提供了很强的 agent 编程体验，但它们的官方桌面端并不开源。OpenLadonx 选择把桌面端这层打开：整合开发者已经熟悉和喜欢的桌面工作流，开源大部分实现，让更多人可以阅读、修改、二次开发，并打造自己想要的智能体客户端。
+
+你可以使用内置服务商路径，也可以接入自己的 OpenAI Responses 兼容端点和 Anthropic Messages 兼容端点。OpenLadonx 面向开发者、团队和 agent 爱好者，适合想要本地优先控制台，而不是被黑盒客户端或浏览器标签页限制住的工作方式。
 
 ![OpenLadonx proxy architecture](assets/flow.png)
 
-## 为什么选择 OpenLadonx
+## OpenLadonx 的作用
 
-- **一个桌面控制台**：统一承载 agent 会话、工作区、文件、终端、diff、分支、issues 和 pull requests。
+OpenLadonx 希望把智能体桌面端变成开发者可以真正拥有和改造的东西。它不是把 agent UI 包成一个不可见的黑盒，而是把一个完整 AI 编程工作台所需要的关键模块开放出来：模型连接、提示词与指令、本地工作区感知、终端访问、Git 上下文、插件状态、MCP 可视化，以及原生桌面集成。
+
+- **统一 agent 工作流**：在一个桌面应用里承载 Codex 风格和 Claude Code 风格的开发体验。
+- **打开桌面端实现**：让开发者可以研究、fork、重构那些通常藏在闭源客户端里的 agent 体验细节。
 - **接入自己的模型**：支持 OpenAI Responses 兼容的 `/v1/responses` 端点，以及 Anthropic Messages 兼容的 `/v1/messages` 端点。
-- **原生工作流界面**：基于 Tauri 2、Rust、React 19、TypeScript、Vite 和本地文件系统集成。
-- **可扩展 agent 环境**：支持 skills、plugins、prompts、MCP 工具调用渲染，以及工作区 `AGENTS.md` 编辑。
-- **本地配置掌控**：管理模型凭据、Codex `config.toml`、插件状态、MCP 状态和桌面设置。
+- **让真实工作更集中**：把会话、工作区、文件、终端、diff、分支、issues 和 pull requests 放在同一个原生界面里。
+- **把扩展能力前置**：支持 skills、plugins、prompts、MCP 工具调用渲染，以及工作区 `AGENTS.md` 编辑。
+- **保留本地配置掌控权**：管理模型凭据、Codex `config.toml`、插件状态、MCP 状态和桌面设置。
+
+如果你正在搭建内部 agent 平台、实验自定义模型、设计新的 coding-agent UX，或者只是希望闭源桌面端能开放某个你需要的能力，OpenLadonx 都可以作为一个足够完整、足够可改造的起点。
 
 ## 模型路由
 
