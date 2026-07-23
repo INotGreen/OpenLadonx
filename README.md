@@ -70,6 +70,14 @@ Install dependencies:
 npm install
 ```
 
+`npm install` also runs local asset/resource sync. The Tauri resources under
+`src-tauri/resources/` are intentionally ignored because they include local
+tool binaries. If they are missing, run:
+
+```sh
+npm run sync:tauri-resources
+```
+
 Run the frontend only:
 
 ```sh
@@ -92,11 +100,17 @@ npm run doctor:strict
 
 ```sh
 npm run build
+npm run sync:tauri-resources
+npm run sync:tauri-resources:all
 npm run lint
 npm run test
 npm run typecheck
 cargo check --manifest-path src-tauri/Cargo.toml
 ```
+
+`sync:tauri-resources` prepares the current platform binaries and generated
+resource templates before local dev. `sync:tauri-resources:all` validates all
+macOS/Windows resource slots and is used by the desktop release script.
 
 For focused Rust/Tauri validation:
 
@@ -129,6 +143,7 @@ cargo test
 │   ├── test/            # Vitest setup
 │   └── utils/           # Shared helpers
 ├── src-tauri/           # Tauri configuration and Rust code
+│   ├── resources/       # Ignored generated templates and local tool binaries
 │   ├── src/             # Rust commands, services, and app wiring
 │   └── tests/           # Rust integration tests
 ├── scripts/             # Build, doctor, release, and maintenance scripts

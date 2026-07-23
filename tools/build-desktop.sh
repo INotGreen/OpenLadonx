@@ -59,6 +59,8 @@ EOF
 trap restore_release_version EXIT
 stamp_release_version
 
+npm run sync:tauri-resources:all
+
 win_target() {
   [ "$1" = "amd64" ] && echo "x86_64-pc-windows-gnu" || echo "${WINDOWS_ARM64_TARGET:-aarch64-pc-windows-gnullvm}"
 }

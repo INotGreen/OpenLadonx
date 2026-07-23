@@ -70,6 +70,13 @@ OpenLadonx 在 Settings 中支持两类自定义 API 协议：
 npm install
 ```
 
+`npm install` 会同时同步本地资源。`src-tauri/resources/` 被刻意加入
+`.gitignore`，因为里面包含本地工具二进制文件。如果资源缺失，可以手动运行：
+
+```sh
+npm run sync:tauri-resources
+```
+
 仅运行前端开发服务：
 
 ```sh
@@ -92,11 +99,16 @@ npm run doctor:strict
 
 ```sh
 npm run build
+npm run sync:tauri-resources
+npm run sync:tauri-resources:all
 npm run lint
 npm run test
 npm run typecheck
 cargo check --manifest-path src-tauri/Cargo.toml
 ```
+
+`sync:tauri-resources` 会为当前平台准备 Tauri 运行所需的二进制和生成模板；
+`sync:tauri-resources:all` 会检查 macOS/Windows 的全部资源位，桌面发布脚本会使用它。
 
 针对 Rust/Tauri 的聚焦验证：
 
@@ -129,6 +141,7 @@ cargo test
 │   ├── test/            # Vitest 测试配置
 │   └── utils/           # 共享工具函数
 ├── src-tauri/           # Tauri 配置与 Rust 代码
+│   ├── resources/       # 被忽略的生成模板与本地工具二进制
 │   ├── src/             # Rust 命令、服务与应用装配
 │   └── tests/           # Rust 集成测试
 ├── scripts/             # 构建、doctor、发布与维护脚本
