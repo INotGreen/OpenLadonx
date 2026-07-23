@@ -2,15 +2,15 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-![Version](https://img.shields.io/badge/version-0.7.68-ff4d8d?style=for-the-badge)
-![Desktop](https://img.shields.io/badge/Desktop-Agent%20Workspace-7c3aed?style=for-the-badge)
-![Tauri](https://img.shields.io/badge/Tauri-2-24c8db?style=for-the-badge&logo=tauri&logoColor=white)
-![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react&logoColor=06111f)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6?style=for-the-badge&logo=typescript&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-Tauri%20Core-f97316?style=for-the-badge&logo=rust&logoColor=white)
-![Model Routing](https://img.shields.io/badge/OpenAI%20%2B%20Anthropic-Compatible-10b981?style=for-the-badge)
-![Plugins](https://img.shields.io/badge/Skills%20%2B%20Plugins%20%2B%20MCP-06b6d4?style=for-the-badge)
-![License](https://img.shields.io/badge/license-see%20LICENSE-facc15?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-0.7.68-ff4d8d)
+![Desktop](https://img.shields.io/badge/desktop-agent%20workspace-7c3aed)
+![Tauri](https://img.shields.io/badge/tauri-2-24c8db?logo=tauri&logoColor=white)
+![React](https://img.shields.io/badge/react-19-61dafb?logo=react&logoColor=06111f)
+![TypeScript](https://img.shields.io/badge/typescript-5.8-3178c6?logo=typescript&logoColor=white)
+![Rust](https://img.shields.io/badge/rust-tauri%20core-f97316?logo=rust&logoColor=white)
+![Model Routing](https://img.shields.io/badge/models-openai%20%2B%20anthropic-10b981)
+![Plugins](https://img.shields.io/badge/extensible-skills%20%2B%20plugins%20%2B%20mcp-06b6d4)
+![License](https://img.shields.io/badge/license-see%20LICENSE-facc15)
 
 OpenLadonx is an open desktop workspace for modern AI coding agents. It brings Codex-style and Claude Code-style workflows into one native Tauri app: chat threads, workspace context, git review, terminals, model routing, skills, plugins, MCP server status, and local desktop integrations.
 
@@ -143,6 +143,8 @@ OpenLadonx reads and writes local desktop settings, Codex configuration, and wor
 - Global and workspace `AGENTS.md` instructions.
 - Codex `config.toml` content.
 - Plugin enablement and MCP configuration managed by the underlying agent environment.
+
+For Anthropic-compatible providers, add a model from Settings with the `Anthropic/Messages` protocol. Use a base URL that exposes a Messages-compatible `/v1/messages` endpoint, enter the provider API key, and list the model IDs you want to show in the selector, such as Claude-family models or compatible router model names. OpenLadonx keeps this configuration local so you can switch between official Anthropic access, private gateways, and third-party compatible providers without changing the app code.
 
 The repository includes `.testflight.local.env.example` as a reference for local release configuration. Copy it to an ignored local file when needed.
 

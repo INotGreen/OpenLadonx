@@ -2,15 +2,15 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-![Version](https://img.shields.io/badge/version-0.7.68-ff4d8d?style=for-the-badge)
-![Desktop](https://img.shields.io/badge/Desktop-Agent%20Workspace-7c3aed?style=for-the-badge)
-![Tauri](https://img.shields.io/badge/Tauri-2-24c8db?style=for-the-badge&logo=tauri&logoColor=white)
-![React](https://img.shields.io/badge/React-19-61dafb?style=for-the-badge&logo=react&logoColor=06111f)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6?style=for-the-badge&logo=typescript&logoColor=white)
-![Rust](https://img.shields.io/badge/Rust-Tauri%20Core-f97316?style=for-the-badge&logo=rust&logoColor=white)
-![Model Routing](https://img.shields.io/badge/OpenAI%20%2B%20Anthropic-Compatible-10b981?style=for-the-badge)
-![Plugins](https://img.shields.io/badge/Skills%20%2B%20Plugins%20%2B%20MCP-06b6d4?style=for-the-badge)
-![License](https://img.shields.io/badge/license-see%20LICENSE-facc15?style=for-the-badge)
+![Version](https://img.shields.io/badge/version-0.7.68-ff4d8d)
+![Desktop](https://img.shields.io/badge/desktop-agent%20workspace-7c3aed)
+![Tauri](https://img.shields.io/badge/tauri-2-24c8db?logo=tauri&logoColor=white)
+![React](https://img.shields.io/badge/react-19-61dafb?logo=react&logoColor=06111f)
+![TypeScript](https://img.shields.io/badge/typescript-5.8-3178c6?logo=typescript&logoColor=white)
+![Rust](https://img.shields.io/badge/rust-tauri%20core-f97316?logo=rust&logoColor=white)
+![Model Routing](https://img.shields.io/badge/models-openai%20%2B%20anthropic-10b981)
+![Plugins](https://img.shields.io/badge/extensible-skills%20%2B%20plugins%20%2B%20mcp-06b6d4)
+![License](https://img.shields.io/badge/license-see%20LICENSE-facc15)
 
 OpenLadonx 是一个面向现代 AI 编程智能体的开源桌面工作台。它把 Codex 风格和 Claude Code 风格的工作流整合进一个原生 Tauri 应用：聊天线程、工作区上下文、Git 审查、终端、模型路由、skills、plugins、MCP 服务状态和本地桌面集成，都可以在同一个桌面界面里完成。
 
@@ -143,6 +143,8 @@ OpenLadonx 会读取和写入本地桌面设置、Codex 配置以及工作区指
 - 全局和工作区 `AGENTS.md` 指令。
 - Codex `config.toml` 内容。
 - 由底层 agent 环境管理的插件启用状态和 MCP 配置。
+
+配置 Anthropic 兼容服务商时，请在 Settings 中新增模型，并选择 `Anthropic/Messages` 协议。base URL 需要指向一个兼容 `/v1/messages` 的服务地址，然后填写对应的 API key 和需要展示在模型选择器里的 model IDs，例如 Claude 系列模型，或第三方路由器提供的兼容模型名。OpenLadonx 会把这些配置保存在本地，因此你可以在官方 Anthropic、私有网关和第三方兼容服务之间切换，而不需要修改应用代码。
 
 仓库提供 `.testflight.local.env.example` 作为本地发布配置参考。需要时可复制为被忽略的本地配置文件。
 
