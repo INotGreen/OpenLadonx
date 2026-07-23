@@ -1,24 +1,32 @@
-# OpenLadonx
+<h3 align="center">OpenLadonx</h3>
+<p align="center"><b>Open desktop workspace for modern AI coding agents</b> — Codex-style and Claude Code-style workflows in one native Tauri app.</p>
+<p align="center"><code>npm install</code> · <code>npm run tauri:dev</code> · <b>OpenAI Responses / Anthropic Messages</b></p>
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+<p align="center">
+  <img src="https://img.shields.io/badge/version-0.7.68-ff4d8d" alt="version">
+  <img src="https://img.shields.io/badge/desktop-agent%20workspace-7c3aed" alt="desktop">
+  <img src="https://img.shields.io/badge/tauri-2-24c8db?logo=tauri&logoColor=white" alt="tauri">
+  <img src="https://img.shields.io/badge/react-19-61dafb?logo=react&logoColor=06111f" alt="react">
+  <img src="https://img.shields.io/badge/typescript-5.8-3178c6?logo=typescript&logoColor=white" alt="typescript">
+  <img src="https://img.shields.io/badge/rust-tauri%20core-f97316?logo=rust&logoColor=white" alt="rust">
+  <img src="https://img.shields.io/badge/models-openai%20%2B%20anthropic-10b981" alt="models">
+  <img src="https://img.shields.io/badge/extensible-skills%20%2B%20plugins%20%2B%20mcp-06b6d4" alt="extensible">
+  <img src="https://img.shields.io/badge/license-see%20LICENSE-facc15" alt="license">
+</p>
 
-![Version](https://img.shields.io/badge/version-0.7.68-ff4d8d)
-![Desktop](https://img.shields.io/badge/desktop-agent%20workspace-7c3aed)
-![Tauri](https://img.shields.io/badge/tauri-2-24c8db?logo=tauri&logoColor=white)
-![React](https://img.shields.io/badge/react-19-61dafb?logo=react&logoColor=06111f)
-![TypeScript](https://img.shields.io/badge/typescript-5.8-3178c6?logo=typescript&logoColor=white)
-![Rust](https://img.shields.io/badge/rust-tauri%20core-f97316?logo=rust&logoColor=white)
-![Model Routing](https://img.shields.io/badge/models-openai%20%2B%20anthropic-10b981)
-![Plugins](https://img.shields.io/badge/extensible-skills%20%2B%20plugins%20%2B%20mcp-06b6d4)
-![License](https://img.shields.io/badge/license-see%20LICENSE-facc15)
+<p align="center">
+  <a href="README.md">English</a> · <a href="README.zh-CN.md">简体中文</a>
+</p>
+
+<p align="center">
+  <img src="assets/flow.png" alt="OpenLadonx proxy architecture" width="820">
+</p>
 
 OpenLadonx is an open desktop workspace for modern AI coding agents. It brings Codex-style and Claude Code-style workflows into one native Tauri app: chat threads, workspace context, git review, terminals, model routing, skills, plugins, MCP server status, and local desktop integrations.
 
 Codex and Claude Code both offer powerful agent experiences, but their official desktop clients are closed-source. OpenLadonx takes a different path: it integrates the desktop-side workflow patterns developers already like, opens most of the implementation, and gives builders a real codebase they can study, modify, fork, and reshape into the agent desktop they actually want.
 
 Use the built-in provider path, or connect your own OpenAI Responses-compatible and Anthropic Messages-compatible model endpoints. OpenLadonx is designed for developers, teams, and agent tinkerers who want a local-first command center instead of another locked-down black box or browser tab.
-
-![OpenLadonx proxy architecture](assets/flow.png)
 
 ## What OpenLadonx Does
 
