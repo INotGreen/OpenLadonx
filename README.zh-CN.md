@@ -2,51 +2,100 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-OpenLadonx 是一个桌面端 AI 编程工作台，基于 React、Vite、TypeScript 和 Tauri 2 构建。它把 Codex 风格的 agent 工作流放进原生桌面应用：工作区管理、线程会话、Git 审查、终端面板、模型配置、skills、plugins、MCP 服务状态以及本地桌面集成都可以在一个界面里完成。
+![Version](https://img.shields.io/badge/version-0.7.68-blue)
+![Tauri](https://img.shields.io/badge/Tauri-2-24c8db)
+![React](https://img.shields.io/badge/React-19-61dafb)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6)
+![License](https://img.shields.io/badge/license-see%20LICENSE-lightgrey)
 
-这个项目面向想要“本地优先 agent 控制台”的用户。你可以使用默认模型凭据，也可以添加自己的兼容模型端点；目前自定义模型只需要兼容 OpenAI Responses 风格 API 或 Anthropic Messages 风格 API。
+OpenLadonx 是一个原生桌面端 AI 编程工作台，面向 Codex 风格的 agent 工作流。它把聊天线程、工作区上下文、Git 审查、终端、模型路由、skills、plugins、MCP 服务状态和本地桌面集成放进一个 Tauri 应用。
 
-## 核心特性
+你可以使用内置服务商路径，也可以接入自己的 OpenAI Responses 兼容端点和 Anthropic Messages 兼容端点。OpenLadonx 面向团队和高频用户，适合需要本地优先 agent 控制台，而不是再开一个浏览器标签页的工作方式。
 
-- 基于 Tauri 2 和 Rust 的原生桌面外壳。
-- 基于 Vite 的 React 19 + TypeScript 前端。
-- 支持工作区感知的聊天线程、文件预览、终端面板、Git diff、分支工具与 PR 辅助。
-- 支持自定义接入兼容 `/v1/responses` 和 `/v1/messages` 的模型端点。
-- 支持在输入框和线程工作流中使用 skills、plugins、prompts 与文件 token 自动补全。
-- 支持渲染 MCP 工具调用，并查看工作区 MCP server 状态。
-- 支持编辑全局 `AGENTS.md` 和 Codex `config.toml`。
-- 提供中英文 README 文档。
+![OpenLadonx proxy architecture](assets/flow.png)
 
-## 模型支持
+## 为什么选择 OpenLadonx
 
-OpenLadonx 的自定义模型支持两类 API 协议：
+- **一个桌面控制台**：统一承载 agent 会话、工作区、文件、终端、diff、分支、issues 和 pull requests。
+- **接入自己的模型**：支持 OpenAI Responses 兼容的 `/v1/responses` 端点，以及 Anthropic Messages 兼容的 `/v1/messages` 端点。
+- **原生工作流界面**：基于 Tauri 2、Rust、React 19、TypeScript、Vite 和本地文件系统集成。
+- **可扩展 agent 环境**：支持 skills、plugins、prompts、MCP 工具调用渲染，以及工作区 `AGENTS.md` 编辑。
+- **本地配置掌控**：管理模型凭据、Codex `config.toml`、插件状态、MCP 状态和桌面设置。
 
-| 设置中的协议 | 期望的端点风格 | 适用场景 |
+## 模型路由
+
+OpenLadonx 在 Settings 中支持两类自定义 API 协议：
+
+| 协议 | 端点风格 | 典型用途 |
 | --- | --- | --- |
-| `OpenAI/Response` | `/v1/responses` | 兼容 OpenAI Responses API 的服务商或路由器。 |
-| `Anthropic/Messages` | `/v1/messages` | 兼容 Anthropic Messages API 的服务商或路由器。 |
+| `OpenAI/Response` | `/v1/responses` | 兼容 OpenAI Responses API 的服务商、路由器或代理层。 |
+| `Anthropic/Messages` | `/v1/messages` | 兼容 Anthropic Messages API 的服务商、路由器或 Claude 风格模型界面。 |
 
-添加模型的步骤：
+添加模型：
 
 1. 打开 **Settings**。
 2. 进入模型/API key 相关区域。
-3. 点击 **添加模型**。
+3. 点击 **Add model**。
 4. 选择 `OpenAI/Response` 或 `Anthropic/Messages`。
-5. 填写接口地址、API Key，以及一个或多个模型 ID。
-6. 使用内置测试请求验证配置。
+5. 填写 base URL、API key，以及一个或多个 model ID。
+6. 运行内置测试请求。
 7. 保存配置后，模型会出现在模型选择器中。
 
-保存自定义模型后，应用会切换到本地自定义 API 配置。自定义模型配置保存在本地，请不要提交本地密钥或生成的配置文件。
+自定义模型设置会保存在本地。请不要提交 API keys、本地认证文件、生成配置或机器专属签名设置。
 
-## 外接工具能力
+## 快速开始
 
-OpenLadonx 围绕可扩展 agent 工作流设计：
+安装依赖：
 
-- **Skills**：在输入框和线程流程中发现、选择并使用 skill 指令。
-- **Plugins**：支持列出已配置插件、浏览插件市场条目、安装插件和卸载插件。
-- **MCP**：支持在线程中展示 MCP 工具调用，并查看工作区 MCP server 状态。
-- **Prompts 与 AGENTS.md**：可以从桌面 UI 编辑全局和工作区级指令。
-- **GitHub 与 Git 工具**：支持查看仓库状态、分支、提交、diff、issues、pull requests 和审查上下文。
+```sh
+npm install
+```
+
+仅运行前端开发服务：
+
+```sh
+npm run dev
+```
+
+启动完整 Tauri 桌面应用：
+
+```sh
+npm run tauri:dev
+```
+
+桌面构建前运行严格环境检查：
+
+```sh
+npm run doctor:strict
+```
+
+## 开发命令
+
+```sh
+npm run build
+npm run lint
+npm run test
+npm run typecheck
+cargo check --manifest-path src-tauri/Cargo.toml
+```
+
+针对 Rust/Tauri 的聚焦验证：
+
+```sh
+cd src-tauri
+cargo check
+cargo test
+```
+
+## 功能范围
+
+- 支持工作区上下文的聊天线程、文件引用和 token 感知自动补全。
+- 文件预览、终端面板、分支工具、Git diff 和面向 PR 的审查上下文。
+- 兼容 Responses 和 Messages 端点的模型/API key 管理。
+- Skills、plugins、prompt 管理和 MCP server 状态界面。
+- 全局与工作区级 `AGENTS.md` 指令的本地编辑器。
+- 从桌面 UI 编辑 Codex `config.toml`。
+- 多语言 UI 资源，以及中英文 README 文档。
 
 ## 项目结构
 
@@ -74,61 +123,15 @@ OpenLadonx 围绕可扩展 agent 工作流设计：
 - 当前平台所需的 Tauri 系统依赖。
 - 默认服务商凭据，或一个兼容的自定义模型端点。
 
-桌面构建前建议运行严格 doctor 检查，提前发现缺失的原生依赖：
-
-```sh
-npm run doctor:strict
-```
-
-## 快速开始
-
-安装 JavaScript 依赖：
-
-```sh
-npm install
-```
-
-仅启动 Vite 前端开发服务：
-
-```sh
-npm run dev
-```
-
-启动完整 Tauri 桌面应用：
-
-```sh
-npm run tauri:dev
-```
-
-## 开发命令
-
-```sh
-npm run build
-npm run lint
-npm run test
-npm run typecheck
-cargo check --manifest-path src-tauri/Cargo.toml
-```
-
-如果修改了 Rust/Tauri 代码，建议在 `src-tauri/` 下运行更聚焦的检查或测试：
-
-```sh
-cd src-tauri
-cargo check
-cargo test
-```
-
 ## 配置说明
 
 OpenLadonx 会读取和写入本地桌面设置、Codex 配置以及工作区指令文件。常见本地配置包括：
 
-- API key 与 base URL。
-- 自定义 Response API 和 Messages API 的模型列表。
-- 全局 `AGENTS.md` 指令。
+- API keys 与 base URLs。
+- 自定义 Responses API 和 Messages API 模型列表。
+- 全局和工作区 `AGENTS.md` 指令。
 - Codex `config.toml` 内容。
 - 由底层 agent 环境管理的插件启用状态和 MCP 配置。
-
-不要提交 API keys、tokens、签名配置、生成产物、本地登录文件或本机专属配置。当前 `.gitignore` 已排除常见构建产物和本地凭据文件，例如 `src-tauri/ladonx_auth.json`。
 
 仓库提供 `.testflight.local.env.example` 作为本地发布配置参考。需要时可复制为被忽略的本地配置文件。
 

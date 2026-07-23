@@ -2,29 +2,34 @@
 
 [English](README.md) | [简体中文](README.zh-CN.md)
 
-OpenLadonx is a desktop AI coding workspace built with React, Vite, TypeScript, and Tauri 2. It wraps Codex-style agent workflows in a native app: workspace management, threaded conversations, git review tools, terminal panels, model configuration, skills, plugins, MCP server status, and local desktop integrations live in one place.
+![Version](https://img.shields.io/badge/version-0.7.68-blue)
+![Tauri](https://img.shields.io/badge/Tauri-2-24c8db)
+![React](https://img.shields.io/badge/React-19-61dafb)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178c6)
+![License](https://img.shields.io/badge/license-see%20LICENSE-lightgrey)
 
-The project is designed for people who want a local-first agent cockpit rather than another browser tab. You can use the default model credentials, or add your own compatible model endpoints for OpenAI Responses-style APIs and Anthropic Messages-style APIs.
+OpenLadonx is a native AI coding workspace for Codex-style agent workflows. It brings chat threads, workspace context, git review, terminals, model routing, skills, plugins, MCP server status, and local desktop integrations into one Tauri app.
 
-## Highlights
+Use the built-in provider path, or connect your own OpenAI Responses-compatible and Anthropic Messages-compatible model endpoints. OpenLadonx is designed for teams and power users who want a local-first agent cockpit instead of yet another browser tab.
 
-- Native desktop shell powered by Tauri 2 and Rust.
-- React 19 + TypeScript frontend with Vite.
-- Workspace-aware chat threads, file previews, terminal panes, git diffs, branch tools, and PR helpers.
-- Custom model configuration for compatible `/v1/responses` and `/v1/messages` endpoints.
-- Skills, plugins, prompts, and file-token autocomplete in the composer.
-- MCP-related tool call rendering and MCP server status surfaces.
-- Local settings editors for `AGENTS.md` and Codex `config.toml`.
-- Multi-language UI assets and README documentation.
+![OpenLadonx proxy architecture](assets/flow.png)
 
-## Model Support
+## Why OpenLadonx
 
-OpenLadonx supports two custom API protocol families:
+- **One desktop cockpit** for agent conversations, workspaces, files, terminals, diffs, branches, issues, and pull requests.
+- **Bring your own models** through OpenAI Responses-compatible `/v1/responses` endpoints or Anthropic Messages-compatible `/v1/messages` endpoints.
+- **Native workflow surfaces** powered by Tauri 2, Rust, React 19, TypeScript, Vite, and local filesystem integration.
+- **Extensible agent environment** with skills, plugins, prompts, MCP tool-call rendering, and workspace `AGENTS.md` editing.
+- **Local configuration control** for model credentials, Codex `config.toml`, plugin state, MCP status, and desktop settings.
 
-| Protocol in Settings | Expected endpoint style | Use case |
+## Model Routing
+
+OpenLadonx supports two custom API protocol families from Settings:
+
+| Protocol | Endpoint style | Typical use |
 | --- | --- | --- |
-| `OpenAI/Response` | `/v1/responses` | OpenAI Responses-compatible providers and routers. |
-| `Anthropic/Messages` | `/v1/messages` | Anthropic Messages-compatible providers and routers. |
+| `OpenAI/Response` | `/v1/responses` | OpenAI Responses-compatible providers, routers, and proxy layers. |
+| `Anthropic/Messages` | `/v1/messages` | Anthropic Messages-compatible providers, routers, and Claude-style model surfaces. |
 
 To add a model:
 
@@ -36,17 +41,61 @@ To add a model:
 6. Run the built-in test request.
 7. Save the configuration. The models will appear in the model selector.
 
-The app stores custom model settings locally and switches to local custom API configuration after you save a custom model. Do not commit local keys or generated config files.
+Custom model settings are stored locally. Do not commit API keys, local auth files, generated config, or machine-specific signing settings.
 
-## External Tools
+## Quick Start
 
-OpenLadonx is built around extensible agent workflows:
+Install dependencies:
 
-- **Skills**: discover and use skill instructions in the composer and thread flow.
-- **Plugins**: list configured plugins, browse plugin marketplace entries, install plugins, and uninstall them from the app.
-- **MCP**: display MCP tool calls in threads and inspect MCP server status for a workspace.
-- **Prompts and AGENTS.md**: edit global and workspace-level instructions from the desktop UI.
-- **GitHub and git tooling**: inspect repository status, branches, commits, diffs, issues, pull requests, and review context.
+```sh
+npm install
+```
+
+Run the frontend only:
+
+```sh
+npm run dev
+```
+
+Launch the full Tauri desktop app:
+
+```sh
+npm run tauri:dev
+```
+
+Run the strict environment check before desktop builds:
+
+```sh
+npm run doctor:strict
+```
+
+## Development Commands
+
+```sh
+npm run build
+npm run lint
+npm run test
+npm run typecheck
+cargo check --manifest-path src-tauri/Cargo.toml
+```
+
+For focused Rust/Tauri validation:
+
+```sh
+cd src-tauri
+cargo check
+cargo test
+```
+
+## Feature Surface
+
+- Workspace-aware chat threads with file references and token-aware autocomplete.
+- File previews, terminal panes, branch helpers, git diffs, and PR-oriented review context.
+- Model/API key management for compatible Responses and Messages endpoints.
+- Skills, plugins, prompt management, and MCP server status surfaces.
+- Local editors for global and workspace-level `AGENTS.md` instructions.
+- Codex `config.toml` editing from the desktop UI.
+- Multi-language UI assets and English/Chinese README documentation.
 
 ## Project Layout
 
@@ -72,63 +121,17 @@ OpenLadonx is built around extensible agent workflows:
 - Node.js and npm.
 - Rust toolchain with Cargo.
 - Tauri system dependencies for your platform.
-- A model credential from a supported default provider or a compatible custom endpoint.
+- A model credential from a supported default provider, or a compatible custom endpoint.
 
-Run the strict doctor check before desktop builds to catch missing native dependencies:
-
-```sh
-npm run doctor:strict
-```
-
-## Getting Started
-
-Install JavaScript dependencies:
-
-```sh
-npm install
-```
-
-Start the Vite frontend only:
-
-```sh
-npm run dev
-```
-
-Launch the full Tauri desktop app:
-
-```sh
-npm run tauri:dev
-```
-
-## Development Commands
-
-```sh
-npm run build
-npm run lint
-npm run test
-npm run typecheck
-cargo check --manifest-path src-tauri/Cargo.toml
-```
-
-For Rust changes, run focused Cargo checks or tests from `src-tauri/` when practical:
-
-```sh
-cd src-tauri
-cargo check
-cargo test
-```
-
-## Configuration Notes
+## Configuration
 
 OpenLadonx reads and writes local desktop settings, Codex configuration, and workspace instruction files. Typical local configuration includes:
 
-- API key and base URL values.
-- Custom Response API and Messages API model lists.
-- Global `AGENTS.md` instructions.
+- API keys and base URLs.
+- Custom Responses API and Messages API model lists.
+- Global and workspace `AGENTS.md` instructions.
 - Codex `config.toml` content.
 - Plugin enablement and MCP configuration managed by the underlying agent environment.
-
-Do not commit API keys, tokens, signing settings, generated bundles, local auth files, or machine-specific configuration. The `.gitignore` excludes common build output and local credential files such as `src-tauri/ladonx_auth.json`.
 
 The repository includes `.testflight.local.env.example` as a reference for local release configuration. Copy it to an ignored local file when needed.
 
