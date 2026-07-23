@@ -1,24 +1,32 @@
-# OpenLadonx
+<h3 align="center">OpenLadonx</h3>
+<p align="center"><b>面向现代 AI 编程智能体的开源桌面工作台</b>，把 Codex 风格和 Claude Code 风格的工作流整合进一个原生 Tauri 应用。</p>
+<p align="center"><code>npm install</code> · <code>npm run tauri:dev</code> · <b>OpenAI Responses / Anthropic Messages</b></p>
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+<p align="center">
+  <img src="https://img.shields.io/badge/version-0.7.68-ff4d8d" alt="version">
+  <img src="https://img.shields.io/badge/desktop-agent%20workspace-7c3aed" alt="desktop">
+  <img src="https://img.shields.io/badge/tauri-2-24c8db?logo=tauri&logoColor=white" alt="tauri">
+  <img src="https://img.shields.io/badge/react-19-61dafb?logo=react&logoColor=06111f" alt="react">
+  <img src="https://img.shields.io/badge/typescript-5.8-3178c6?logo=typescript&logoColor=white" alt="typescript">
+  <img src="https://img.shields.io/badge/rust-tauri%20core-f97316?logo=rust&logoColor=white" alt="rust">
+  <img src="https://img.shields.io/badge/models-openai%20%2B%20anthropic-10b981" alt="models">
+  <img src="https://img.shields.io/badge/extensible-skills%20%2B%20plugins%20%2B%20mcp-06b6d4" alt="extensible">
+  <img src="https://img.shields.io/badge/license-see%20LICENSE-facc15" alt="license">
+</p>
 
-![Version](https://img.shields.io/badge/version-0.7.68-ff4d8d)
-![Desktop](https://img.shields.io/badge/desktop-agent%20workspace-7c3aed)
-![Tauri](https://img.shields.io/badge/tauri-2-24c8db?logo=tauri&logoColor=white)
-![React](https://img.shields.io/badge/react-19-61dafb?logo=react&logoColor=06111f)
-![TypeScript](https://img.shields.io/badge/typescript-5.8-3178c6?logo=typescript&logoColor=white)
-![Rust](https://img.shields.io/badge/rust-tauri%20core-f97316?logo=rust&logoColor=white)
-![Model Routing](https://img.shields.io/badge/models-openai%20%2B%20anthropic-10b981)
-![Plugins](https://img.shields.io/badge/extensible-skills%20%2B%20plugins%20%2B%20mcp-06b6d4)
-![License](https://img.shields.io/badge/license-see%20LICENSE-facc15)
+<p align="center">
+  <a href="README.md">English</a> · <a href="README.zh-CN.md">简体中文</a>
+</p>
+
+<p align="center">
+  <img src="assets/flow.png" alt="OpenLadonx proxy architecture" width="820">
+</p>
 
 OpenLadonx 是一个面向现代 AI 编程智能体的开源桌面工作台。它把 Codex 风格和 Claude Code 风格的工作流整合进一个原生 Tauri 应用：聊天线程、工作区上下文、Git 审查、终端、模型路由、skills、plugins、MCP 服务状态和本地桌面集成，都可以在同一个桌面界面里完成。
 
 Codex 和 Claude Code 都提供了很强的 agent 编程体验，但它们的官方桌面端并不开源。OpenLadonx 选择把桌面端这层打开：整合开发者已经熟悉和喜欢的桌面工作流，开源大部分实现，让更多人可以阅读、修改、二次开发，并打造自己想要的智能体客户端。
 
 你可以使用内置服务商路径，也可以接入自己的 OpenAI Responses 兼容端点和 Anthropic Messages 兼容端点。OpenLadonx 面向开发者、团队和 agent 爱好者，适合想要本地优先控制台，而不是被黑盒客户端或浏览器标签页限制住的工作方式。
-
-![OpenLadonx proxy architecture](assets/flow.png)
 
 ## OpenLadonx 的作用
 
