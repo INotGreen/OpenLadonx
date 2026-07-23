@@ -4,6 +4,7 @@ import Eye from "lucide-react/dist/esm/icons/eye";
 import EyeOff from "lucide-react/dist/esm/icons/eye-off";
 import Pencil from "lucide-react/dist/esm/icons/pencil";
 import Plus from "lucide-react/dist/esm/icons/plus";
+import Power from "lucide-react/dist/esm/icons/power";
 import X from "lucide-react/dist/esm/icons/x";
 import { ModalShell } from "@/features/design-system/components/modal/ModalShell";
 import type { CustomApiConfig } from "@/types";
@@ -33,6 +34,7 @@ type SettingsApiKeyManagerProps = {
   onTestApiKey: (request: TestApiKeyPayload) => Promise<unknown>;
   onSaveCustomResponseApi: (config: CustomApiConfig) => Promise<void>;
   onSaveCustomMessagesApi: (config: CustomApiConfig) => Promise<void>;
+  onApplyCustomApi: (protocol: ApiProtocol, config: CustomApiConfig) => Promise<void>;
 };
 
 type ProtocolOption = {
@@ -465,8 +467,10 @@ export function SettingsApiKeyManager({
   onTestApiKey,
   onSaveCustomResponseApi,
   onSaveCustomMessagesApi,
+  onApplyCustomApi,
 }: SettingsApiKeyManagerProps) {
   const [modalState, setModalState] = useState<ApiKeyModalState | null>(null);
+  const [applyingProtocol, setApplyingProtocol] = useState<ApiProtocol | null>(null);
   const savedConfigs = useMemo(
     () =>
       [
@@ -489,6 +493,15 @@ export function SettingsApiKeyManager({
       return;
     }
     await onSaveCustomMessagesApi(config);
+  };
+
+  const applySavedConfig = async (protocol: ApiProtocol, config: CustomApiConfig) => {
+    setApplyingProtocol(protocol);
+    try {
+      await onApplyCustomApi(protocol, config);
+    } finally {
+      setApplyingProtocol(null);
+    }
   };
 
   return (
@@ -535,6 +548,16 @@ export function SettingsApiKeyManager({
                     <span className="settings-api-key-status is-active">
                       {config.models.length} 个模型
                     </span>
+                    <button
+                      type="button"
+                      className="ghost icon-button settings-api-key-apply"
+                      onClick={() => void applySavedConfig(entry.protocol, config)}
+                      disabled={applyingProtocol !== null}
+                      aria-label={`启用 ${entry.label}`}
+                      title={`启用 ${entry.label}`}
+                    >
+                      <Power aria-hidden />
+                    </button>
                     <button
                       type="button"
                       className="ghost icon-button settings-api-key-edit"

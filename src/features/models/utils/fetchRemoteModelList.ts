@@ -1,4 +1,4 @@
-import { getLadonxApiBaseUrl } from "@/services/runtimeDefaults";
+import { getLadonxApiBaseUrl, getRuntimeDefaults } from "@/services/runtimeDefaults";
 import {
   readAnthropicApiKeyEnv,
   readCodexBaseUrl,
@@ -10,12 +10,22 @@ import { parseModelListResponse } from "./modelListResponse";
 type RemoteModelProvider = "openai" | "anthropic";
 export type ModelEndpointType = "response" | "message";
 
+type FetchRemoteModelListOptions = {
+  preferLadonxBaseUrl?: boolean;
+};
+
 function normalizeBaseUrl(value: string | null | undefined): string | null {
   const trimmed = value?.trim();
   return trimmed ? trimmed.replace(/\/+$/, "") : null;
 }
 
-async function resolveModelsBaseUrl(): Promise<string> {
+async function resolveModelsBaseUrl(options: FetchRemoteModelListOptions = {}): Promise<string> {
+  if (options.preferLadonxBaseUrl) {
+    const codexBaseUrl = normalizeBaseUrl((await getRuntimeDefaults()).codexBaseUrl);
+    if (codexBaseUrl) {
+      return codexBaseUrl;
+    }
+  }
   const [codexBaseUrl, ladonxApiBaseUrl] = await Promise.all([
     readCodexBaseUrl(),
     getLadonxApiBaseUrl(),
@@ -47,9 +57,10 @@ async function readProviderApiKey(provider: RemoteModelProvider): Promise<string
 export async function fetchRemoteModelList(
   provider: RemoteModelProvider,
   endpointType: ModelEndpointType = "response",
+  options: FetchRemoteModelListOptions = {},
 ): Promise<ModelOption[]> {
   const [baseUrl, apiKey] = await Promise.all([
-    resolveModelsBaseUrl(),
+    resolveModelsBaseUrl(options),
     readProviderApiKey(provider),
   ]);
   const modelsUrl = new URL(`${baseUrl}/models`);

@@ -13,8 +13,10 @@ type UseModelsOptions = {
   preferredModelId?: string | null;
   preferredEffort?: string | null;
   selectionKey?: string | null;
-  /** 自定义 API 模式下由本地配置生成的模型列表；非空时跳过后端拉取。 */
+  /** 由本地自定义配置生成的模型列表；非空时跳过后端拉取。 */
   customModels?: ModelOption[] | null;
+  /** 登录态下允许通过 API Key 请求后端模型列表；未登录时关闭远程拉取。 */
+  remoteModelsEnabled?: boolean;
 };
 
 const findModelByIdOrModel = (
@@ -44,6 +46,7 @@ export function useModels({
   preferredEffort = null,
   selectionKey = null,
   customModels = null,
+  remoteModelsEnabled = true,
 }: UseModelsOptions) {
   const [models, setModels] = useState<ModelOption[]>([]);
   const [configModel, setConfigModel] = useState<string | null>(null);
@@ -56,6 +59,7 @@ export function useModels({
   const lastWorkspaceId = useRef<string | null>(null);
   const lastSelectionKey = useRef<string | null>(null);
   const lastCustomModelsRef = useRef<ModelOption[] | null | undefined>(undefined);
+  const lastRemoteModelsEnabledRef = useRef<boolean | undefined>(undefined);
 
   const workspaceId = activeWorkspace?.id ?? null;
   const workspaceSource = activeWorkspace?.source ?? null;
@@ -177,6 +181,16 @@ export function useModels({
       return;
     }
 
+    if (!remoteModelsEnabled) {
+      setConfigModel(null);
+      setModels([]);
+      setSelectedModelIdState(null);
+      setSelectedEffortState(null);
+      lastFetchedWorkspaceId.current = workspaceModelKey;
+      inFlight.current = false;
+      return;
+    }
+
     onDebug?.({
       id: `${Date.now()}-client-model-list`,
       timestamp: Date.now(),
@@ -192,6 +206,7 @@ export function useModels({
         fetchRemoteModelList(
           workspaceSource === "claude_code" ? "anthropic" : "openai",
           workspaceSource === "claude_code" ? "message" : "response",
+          { preferLadonxBaseUrl: true },
         ),
         getConfigModel(workspaceId),
       ]);
@@ -276,6 +291,7 @@ export function useModels({
     workspaceModelKey,
     workspaceSource,
     customModels,
+    remoteModelsEnabled,
   ]);
 
   useEffect(() => {
@@ -283,16 +299,27 @@ export function useModels({
       return;
     }
     const customChanged = lastCustomModelsRef.current !== customModels;
+    const remoteModelsEnabledChanged =
+      lastRemoteModelsEnabledRef.current !== remoteModelsEnabled;
     if (
       !customChanged &&
+      !remoteModelsEnabledChanged &&
       lastFetchedWorkspaceId.current === workspaceModelKey &&
       models.length > 0
     ) {
       return;
     }
     lastCustomModelsRef.current = customModels;
+    lastRemoteModelsEnabledRef.current = remoteModelsEnabled;
     refreshModels();
-  }, [isConnected, models.length, refreshModels, workspaceModelKey, customModels]);
+  }, [
+    isConnected,
+    models.length,
+    refreshModels,
+    workspaceModelKey,
+    customModels,
+    remoteModelsEnabled,
+  ]);
 
   useEffect(() => {
     if (!selectedModel) {

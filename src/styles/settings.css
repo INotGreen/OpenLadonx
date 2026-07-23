@@ -1959,11 +1959,16 @@
   gap: 8px;
 }
 
+.settings-api-key-apply,
 .settings-api-key-edit {
   width: 30px;
   height: 30px;
   border-color: var(--border-muted);
   color: var(--text-muted);
+}
+
+.settings-api-key-apply:disabled {
+  opacity: 0.55;
 }
 
 .settings-api-key-saved-name {

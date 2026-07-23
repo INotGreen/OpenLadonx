@@ -27,6 +27,7 @@ import { getLadonxApiBaseUrl } from "@services/runtimeDefaults";
 
 type AuthGateProps = {
   hasLoadedWorkspaces: boolean;
+  onAuthReadyChange?: (ready: boolean) => void;
   onSignedInChange?: (signedIn: boolean) => void;
   addDebugEntry?: (entry: {
     id: string;
@@ -50,6 +51,7 @@ type WechatWidgetConfig = {
 
 type AuthGateControllerOptions = {
   hasLoadedWorkspaces: boolean;
+  onAuthReadyChange?: (ready: boolean) => void;
   onSignedInChange?: (signedIn: boolean) => void;
   addDebugEntry?: AuthGateProps["addDebugEntry"];
   enableWechatWindowFlow?: boolean;
@@ -57,6 +59,7 @@ type AuthGateControllerOptions = {
 
 function useAuthGateController({
   hasLoadedWorkspaces,
+  onAuthReadyChange,
   onSignedInChange,
   addDebugEntry,
   enableWechatWindowFlow = false,
@@ -96,8 +99,9 @@ function useAuthGateController({
   }, [status]);
 
   useEffect(() => {
-    onSignedInChange?.(status !== "checking");
-  }, [onSignedInChange, status]);
+    onAuthReadyChange?.(status !== "checking");
+    onSignedInChange?.(status === "signed-in");
+  }, [onAuthReadyChange, onSignedInChange, status]);
 
   useEffect(() => {
     logAuthGate(`status=${status}, mode=${mode}, hasLoadedWorkspaces=${hasLoadedWorkspaces}`);
@@ -833,12 +837,14 @@ function SharedAuthContent({
 
 export function AuthGate({
   hasLoadedWorkspaces,
+  onAuthReadyChange,
   onSignedInChange,
   addDebugEntry,
   children,
 }: AuthGateProps) {
   const controller = useAuthGateController({
     hasLoadedWorkspaces,
+    onAuthReadyChange,
     onSignedInChange,
     addDebugEntry,
     enableWechatWindowFlow: true,

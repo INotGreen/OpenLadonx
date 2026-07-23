@@ -96,6 +96,8 @@ const SettingsView = lazy(() =>
 
 export default function MainApp() {
   const [authReady, setAuthReady] = useState(false);
+  const [isSignedIn, setIsSignedIn] = useState(false);
+  const [signedInModelsReady, setSignedInModelsReady] = useState(false);
   const {
     appSettings,
     setAppSettings,
@@ -291,9 +293,9 @@ export default function MainApp() {
 
   // Access mode is thread-scoped (best-effort persisted) and falls back to the app default.
 
-  // 自定义 API 模式：按 workspace source 取对应自定义配置的模型列表。
+  // 未登录时按 workspace source 取对应自定义配置的模型列表；登录后通过 API Key 请求后端模型列表。
   const customModels = useMemo(() => {
-    if (appSettings.apiSourceMode !== "custom") {
+    if (isSignedIn) {
       return null;
     }
     const isClaudeSource = activeWorkspace?.source === "claude_code";
@@ -305,10 +307,10 @@ export default function MainApp() {
     }
     return buildCustomModelOptions(customConfig.models);
   }, [
-    appSettings.apiSourceMode,
     appSettings.customMessagesApi,
     appSettings.customResponseApi,
     activeWorkspace?.source,
+    isSignedIn,
   ]);
 
   const {
@@ -327,6 +329,7 @@ export default function MainApp() {
     preferredEffort,
     selectionKey: threadCodexSelectionKey,
     customModels,
+    remoteModelsEnabled: signedInModelsReady,
   });
 
   const {
@@ -367,6 +370,24 @@ export default function MainApp() {
   useEffect(() => {
     void syncLadonxAuthEnv().catch(() => {});
   }, []);
+  useEffect(() => {
+    if (!isSignedIn) {
+      setSignedInModelsReady(false);
+      return;
+    }
+    let canceled = false;
+    setSignedInModelsReady(false);
+    void syncLadonxAuthEnv()
+      .catch(() => {})
+      .finally(() => {
+        if (!canceled) {
+          setSignedInModelsReady(true);
+        }
+      });
+    return () => {
+      canceled = true;
+    };
+  }, [isSignedIn]);
   useEffect(() => {
     if (!rightPanelCollapsed) {
       return;
@@ -2181,7 +2202,8 @@ export default function MainApp() {
   return (
     <AuthGate
       hasLoadedWorkspaces={hasLoaded}
-      onSignedInChange={setAuthReady}
+      onAuthReadyChange={setAuthReady}
+      onSignedInChange={setIsSignedIn}
       addDebugEntry={addDebugEntry}
     >
       <MainAppShell {...mainAppShellProps} />

@@ -55,6 +55,7 @@ export type SettingsCodexSectionProps = {
   onSelectApiSourceMode: (mode: "default" | "custom") => Promise<void>;
   onSaveCustomResponseApi: (config: CustomApiConfig) => Promise<void>;
   onSaveCustomMessagesApi: (config: CustomApiConfig) => Promise<void>;
+  onApplyCustomApi: (protocol: "response" | "messages", config: CustomApiConfig) => Promise<void>;
   globalAgentsMeta: string;
   globalAgentsPath: string;
   globalAgentsError: string | null;
@@ -333,6 +334,21 @@ export const useSettingsCodexSection = ({
     }
   };
 
+  const handleApplyCustomApi = async (protocol: "response" | "messages", config: CustomApiConfig) => {
+    setApiKeysError(null);
+    try {
+      await onUpdateAppSettings({ ...appSettings, apiSourceMode: "custom" });
+      if (protocol === "response") {
+        await applyCustomResponseApi(config.baseUrl, config.apiKey);
+        return;
+      }
+      await applyCustomMessagesApi(config.baseUrl, config.apiKey);
+    } catch (error) {
+      setApiKeysError(error instanceof Error ? error.message : String(error));
+      throw error;
+    }
+  };
+
   return {
     appSettings,
     onUpdateAppSettings,
@@ -348,6 +364,7 @@ export const useSettingsCodexSection = ({
     onSelectApiSourceMode: handleSelectApiSourceMode,
     onSaveCustomResponseApi: handleSaveCustomResponseApi,
     onSaveCustomMessagesApi: handleSaveCustomMessagesApi,
+    onApplyCustomApi: handleApplyCustomApi,
     // Global config props (passed to agents section)
     globalAgentsMeta: globalAgentsEditorMeta.meta,
     globalAgentsPath,
