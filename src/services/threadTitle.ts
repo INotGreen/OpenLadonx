@@ -9,16 +9,21 @@ function normalizeBaseUrl(value: string): string {
   return value.trim().replace(/\/+$/, "");
 }
 
+export async function readThreadTitleAccountApiKey(): Promise<string | null> {
+  const authStatus = await getLadonxAuthStatus();
+  const user = authStatus?.account?.user;
+  const apiKey =
+    user?.apiKey?.codex?.trim?.() ||
+    user?.apiKey?.trim?.() ||
+    user?.apiKeycodex?.trim?.() ||
+    user?.api_key?.trim?.() ||
+    "";
+  return apiKey || null;
+}
+
 async function readThreadTitleApiKey(): Promise<string> {
   try {
-    const authStatus = await getLadonxAuthStatus();
-    const user = authStatus?.account?.user;
-    const apiKey =
-      user?.apiKey?.codex?.trim?.() ||
-      user?.apiKey?.trim?.() ||
-      user?.apiKeycodex?.trim?.() ||
-      user?.api_key?.trim?.() ||
-      "";
+    const apiKey = await readThreadTitleAccountApiKey();
     if (apiKey) {
       return apiKey;
     }
@@ -37,10 +42,14 @@ async function readThreadTitleApiKey(): Promise<string> {
   return apiKey;
 }
 
-export async function generateThreadTitle(prompt: string, workspaceId?: string | null) {
+export async function generateThreadTitle(
+  prompt: string,
+  workspaceId?: string | null,
+  options?: { apiKey?: string | null },
+) {
   const [baseUrl, apiKey] = await Promise.all([
     getLadonxApiBaseUrl(),
-    readThreadTitleApiKey(),
+    options?.apiKey?.trim() ? Promise.resolve(options.apiKey.trim()) : readThreadTitleApiKey(),
   ]);
   const response = await fetch(`${normalizeBaseUrl(baseUrl)}/v1/api/thread-title`, {
     method: "POST",

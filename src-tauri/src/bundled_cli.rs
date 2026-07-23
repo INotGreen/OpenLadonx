@@ -354,6 +354,7 @@ pub(crate) fn ensure_bundled_cli() -> Option<PathBuf> {
 pub(crate) fn sync_ladonx_cli_credentials(
     codex_api_key: Option<&str>,
     claudecode_api_key: Option<&str>,
+    codex_base_url: &str,
     anthropic_base_url: &str,
 ) -> Result<(), String> {
     if let Some(codex_api_key) = codex_api_key
@@ -362,13 +363,14 @@ pub(crate) fn sync_ladonx_cli_credentials(
     {
         let codex_home =
             bundled_cli_home().ok_or_else(|| "Failed to resolve Codex home".to_string())?;
-        write_codex_config(&codex_home, crate::settings::CODEX_BASE_URL)?;
-        write_agents_md_with_values(
-            &codex_home,
-            crate::settings::CODEX_BASE_URL,
-            Some(codex_api_key),
+        write_codex_config(&codex_home, codex_base_url)?;
+        crate::codex::config::write_base_url_with_wire_api(
+            Some(codex_base_url),
+            Some("responses"),
         )?;
+        write_agents_md_with_values(&codex_home, codex_base_url, Some(codex_api_key))?;
         write_codex_auth_json(codex_api_key)?;
+        crate::settings::apply_openai_credentials_env(Some(codex_base_url), Some(codex_api_key));
     }
 
     if let Some(claudecode_api_key) = claudecode_api_key

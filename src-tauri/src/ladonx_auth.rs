@@ -202,14 +202,27 @@ fn anthropic_base_url_for_api_base_url(api_base_url: &str) -> String {
     format!("{normalized}/anthropic")
 }
 
+fn codex_base_url_for_api_base_url(api_base_url: &str) -> String {
+    let normalized = api_base_url.trim().trim_end_matches('/');
+    let default_api_base = crate::settings::DEFAULT_LADONX_API_BASE_URL.trim_end_matches('/');
+    if normalized == default_api_base {
+        return crate::settings::CODEX_BASE_URL.to_string();
+    }
+    if normalized.ends_with("/v1") {
+        return normalized.to_string();
+    }
+    format!("{normalized}/v1")
+}
+
 fn sync_ladonx_cli_credentials(
     user: &Value,
     codex_api_key: &str,
+    codex_base_url: &str,
     anthropic_base_url: &str,
 ) -> Result<(), String> {
     let _ = user;
     let anthropic_auth_token = codex_api_key.trim();
-    crate::settings::apply_openai_api_key_env(Some(codex_api_key));
+    crate::settings::apply_openai_credentials_env(Some(codex_base_url), Some(codex_api_key));
     crate::settings::apply_anthropic_credentials_env(
         Some(anthropic_base_url),
         Some(anthropic_auth_token),
@@ -219,12 +232,13 @@ fn sync_ladonx_cli_credentials(
         crate::bundled_cli::sync_ladonx_cli_credentials(
             Some(codex_api_key),
             Some(anthropic_auth_token),
+            codex_base_url,
             anthropic_base_url,
         )?;
     }
     #[cfg(not(any(target_os = "windows", target_os = "macos")))]
     {
-        let _ = (user, codex_api_key, anthropic_base_url);
+        let _ = (user, codex_api_key, codex_base_url, anthropic_base_url);
     }
     Ok(())
 }
@@ -415,6 +429,7 @@ pub(crate) async fn sync_ladonx_auth_on_startup(app_state: &AppState) -> Result<
     sync_ladonx_cli_credentials(
         &auth.user,
         &auth.api_key,
+        &codex_base_url_for_api_base_url(&api_base_url),
         &anthropic_base_url_for_api_base_url(&api_base_url),
     )?;
     update_runtime_auth_state(app_state, Some(auth)).await
@@ -477,6 +492,7 @@ async fn finalize_login(
     sync_ladonx_cli_credentials(
         &auth.user,
         &auth.api_key,
+        &codex_base_url_for_api_base_url(api_base_url),
         &anthropic_base_url_for_api_base_url(api_base_url),
     )?;
     update_runtime_auth_state(state, Some(auth)).await?;
@@ -964,6 +980,7 @@ pub(crate) async fn ladonx_auth_wechat_login(
                             if let Err(error) = sync_ladonx_cli_credentials(
                                 &auth.user,
                                 &auth.api_key,
+                                &codex_base_url_for_api_base_url(&api_base_url),
                                 &anthropic_base_url_for_api_base_url(&api_base_url),
                             ) {
                                 emit(json!({
@@ -1365,10 +1382,7 @@ mod tests {
     #[test]
     fn api_endpoint_url_accepts_exact_endpoint_url() {
         assert_eq!(
-            api_endpoint_url(
-                "https://api.example.com/v1/responses",
-                "/v1/responses"
-            ),
+            api_endpoint_url("https://api.example.com/v1/responses", "/v1/responses"),
             "https://api.example.com/v1/responses"
         );
     }

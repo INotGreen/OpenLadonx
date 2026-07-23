@@ -2191,7 +2191,7 @@ dependencies = [
 
 [[package]]
 name = "ladonx"
-version = "0.7.68-20260701-041003"
+version = "0.7.68-20260724-001523"
 dependencies = [
  "base64 0.22.1",
  "block2",

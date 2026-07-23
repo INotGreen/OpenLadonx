@@ -1,12 +1,12 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "LadonX",
-  "version": "0.7.68-20260701-041003",
+  "version": "0.7.68-20260724-001523",
   "identifier": "com.ladonx.app",
   "build": {
     "beforeDevCommand": "npm run dev",
     "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "npm run build",
+    "beforeBuildCommand": "",
     "frontendDist": "../dist"
   },
   "app": {
